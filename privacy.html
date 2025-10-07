@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Privacy Policy • Trading Outcome Probability Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/brand-strip.css" />
+    <style>
+      .policy-container{max-width:60rem;margin:0 auto;padding:2rem 1rem 4rem;}
+      .policy-container h1{text-align:center;font-size:2.5rem;font-weight:800;color:#fff;margin-bottom:1.5rem;}
+      .policy-container h2{font-size:1.25rem;font-weight:700;color:#fbbf24;margin-top:2.5rem;margin-bottom:.5rem}
+      .policy-container h3{font-size:1.1rem;font-weight:700;color:#38bdf8;margin-top:1.5rem;margin-bottom:.25rem}
+      .policy-container ul{list-style:disc;padding-left:1.5rem;margin-bottom:1.5rem;}
+      .policy-container p,.policy-container li{color:#cbd5e1;line-height:1.7;}
+      .policy-container .section-num{font-weight:700;color:#fbbf24;margin-right:.5rem;}
+      .policy-container .subtle{color:#94a3b8;font-size:.95em;}
+      .policy-container .mt-2{margin-top:.5rem;}
+      .policy-container .mt-4{margin-top:1.5rem;}
+    </style>
+  </head>
+  <body class="text-slate-300 bg-slate-900" style="font-family: 'Inter', sans-serif;">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-slate-800/95 backdrop-blur border-b border-slate-700/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="h-14 flex items-center gap-6">
+          <a href="index.html" class="flex items-center gap-2 shrink-0">
+            <svg class="w-10 h-10" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="goldChevronPrivacy" x1="14" y1="12" x2="20" y2="12" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#f59e0b"/>
+                  <stop offset="1" stop-color="#fbbf24"/>
+                </linearGradient>
+              </defs>
+              <g transform="rotate(45 12 12)">
+                <path d="M14 6 L20 12 L14 18 L14 15 L17 12 L14 9 Z" fill="url(#goldChevronPrivacy)"/>
+                <rect x="4.8" y="14" width="5.8" height="2" rx="0" fill="#22c55e"/>
+                <rect x="5.8" y="11" width="4.8" height="2" rx="0" fill="#ef4444"/>
+                <rect x="6.8" y="8" width="3.8" height="2" rx="0" fill="#22c55e"/>
+                <line x1="4.2" y1="15" x2="4.8" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="10.6" y1="15" x2="11.2" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="5.2" y1="12" x2="5.8" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="10.6" y1="12" x2="11.2" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="6.2" y1="9" x2="6.8" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="10.6" y1="9" x2="11.2" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+              </g>
+            </svg>
+            <span class="font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">TOPC</span>
+            <span class="ml-1 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">10</span>
+            <span class="ml-1 text-[10px] uppercase tracking-wide text-slate-400">Years</span>
+          </a>
+          <nav class="hidden xl:flex items-center gap-8 text-sm font-semibold text-slate-300">
+            <a href="faq.html" class="hover:text-white">FAQ</a>
+            <a href="testimonials.html" class="hover:text-white">Testimonials</a>
+            <a href="dashboard.html" class="hover:text-white">Trading</a>
+            <a href="about.html" class="hover:text-white">About us</a>
+            <a href="privacy.html" class="text-white">Privacy Policy</a>
+          </nav>
+          <div class="ml-auto flex items-center gap-4">
+            <a href="dashboard.html" class="hidden md:inline text-blue-400 hover:text-blue-300 font-semibold">Client Area</a>
+            <button id="navTrigger" class="xl:hidden p-2 -mr-2 text-slate-300 hover:text-white" aria-label="Open menu">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Off-canvas drawer (right) -->
+    <div id="drawerOverlay" class="fixed inset-0 bg-black/50 z-50 hidden"></div>
+    <aside id="drawerPanel" class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-slate-800 border-l border-slate-700 z-50 transform translate-x-full transition-transform duration-300">
+      <div class="h-14 flex items-center justify-between px-4 border-b border-slate-700/80">
+        <button class="text-slate-300 hover:text-white"><i class="fas fa-magnifying-glass"></i></button>
+        <button id="drawerCloseBtn" class="text-slate-300 hover:text-white text-xl" aria-label="Close menu"><i class="fas fa-xmark"></i></button>
+      </div>
+      <nav class="px-4 py-3 flex flex-col gap-4 text-base font-semibold text-slate-200">
+        <a href="faq.html" class="py-1">FAQ</a>
+        <a href="testimonials.html" class="py-1">Testimonials</a>
+        <a href="dashboard.html" class="py-1">Trading</a>
+        <a href="about.html" class="py-1">About us</a>
+        <a href="privacy.html" class="py-1">Privacy Policy</a>
+        <div class="py-2 border-t border-slate-700/80"></div>
+        <a href="#" class="flex items-center justify-between py-1"><span class="flex items-center gap-2"><span class="text-xl">🇬🇧</span> EN</span><i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
+        <div class="pt-2">
+          <a href="dashboard.html" class="inline-flex w-full items-center justify-center rounded-md bg-blue-600 hover:bg-blue-700 text-white font-bold h-11">Client Area</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="policy-container">
+      <h1>Privacy Policy</h1>
+      <p class="subtle mb-4">Effective date: October 7, 2025</p>
+      <p>When using our services we process personal data of our customers (“you”, “your” or the “Customer”). This Privacy Policy (the “Policy”) provides you with information about how your data are processed on the Trading Outcome Probability Calculator (TOPC) website.</p>
+      <div class="mt-4">
+        <strong>In this Privacy Policy, you will find information regarding the following:</strong>
+        <ul>
+          <li>Who is the controller of your personal data and whom to contact?</li>
+          <li>What information do we collect about you and how do we obtain it?</li>
+          <li>How do we use your personal data?</li>
+          <li>How do we store personal data and how are they secured?</li>
+          <li>To whom do we make your personal data available?</li>
+          <li>Do we transfer your data to third countries and international organisations?</li>
+          <li>What are your rights and how can you exercise them?</li>
+        </ul>
+      </div>
+      <h2><span class="section-num">1.</span>Who is the controller of your personal data and whom to contact?</h2>
+      <p>The controller of personal data is <strong>TOPC (Trading Outcome Probability Calculator)</strong>, operated by Emilian-Ene, with its main office in Romania. For privacy questions or to exercise your rights, contact: <a href="mailto:privacy@topc.com" class="text-blue-400 underline">privacy@topc.com</a>.</p>
+      <h2><span class="section-num">2.</span>What information do we collect about you and how do we obtain it?</h2>
+      <p>We collect information you provide directly (e.g., when you use the contact form, register, or communicate with us), information collected automatically (e.g., device, browser, IP, usage data), and information from third parties (e.g., if you link a social account).</p>
+      <ul>
+        <li><strong>Directly from you:</strong> Name, email, contact details, messages, account data, and any info you submit via forms.</li>
+        <li><strong>Automatically:</strong> Device type, IP address, browser, OS, usage data (pages visited, time, etc.).</li>
+        <li><strong>From third parties:</strong> If you use social login or connect a trading platform, we may receive profile or simulated trade data.</li>
+      </ul>
+      <h2><span class="section-num">3.</span>How do we use your personal data?</h2>
+      <ul>
+        <li>To provide and maintain your account and access to the dashboard and tools.</li>
+        <li>To communicate with you, including support and updates.</li>
+        <li>To improve and secure our services.</li>
+        <li>For analytics and understanding usage patterns.</li>
+        <li>For legal compliance and to protect our rights.</li>
+        <li>With your consent, for marketing or newsletter purposes.</li>
+      </ul>
+      <h2><span class="section-num">4.</span>How do we store personal data and how are they secured?</h2>
+      <p>We store your data securely using encryption and access controls. Data is kept only as long as necessary for the purposes described, or as required by law.</p>
+      <h2><span class="section-num">5.</span>How long do we process your data?</h2>
+      <p>We retain your data only as long as needed for the purposes described, or as required by law. For example, account and contract data may be kept for up to 10 years for legal reasons.</p>
+      <h2><span class="section-num">6.</span>Data sharing and transfers to third countries</h2>
+      <p>We may share your data with service providers (e.g., hosting, analytics, support tools) as needed to operate the site. We do not sell your data. Some providers may be located outside the EU; in such cases, we ensure appropriate safeguards are in place.</p>
+      <h2><span class="section-num">7.</span>Your rights</h2>
+      <ul>
+        <li>Right to access, correct, or delete your data</li>
+        <li>Right to restrict or object to processing</li>
+        <li>Right to data portability</li>
+        <li>Right to withdraw consent at any time</li>
+        <li>Right to lodge a complaint with a supervisory authority</li>
+      </ul>
+      <p>To exercise your rights, email <a href="mailto:privacy@topc.com" class="text-blue-400 underline">privacy@topc.com</a>.</p>
+      <h2><span class="section-num">8.</span>Final provisions</h2>
+      <p>We may update this policy as needed. The latest version will always be available on this page.</p>
+    </main>
+
+    <!-- Brand slider strip above footer -->
+    <section class="brand-strip">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="brand-viewport">
+          <div class="brand-track" data-duplicate>
+            <div class="brand-seq">
+              <div class="brand-item"><span class="k">Forbes</span></div>
+              <div class="brand-item"><span class="k">fmls:23</span><span class="sub">Best Prop Trading Firm</span></div>
+              <div class="brand-item"><span class="k">fmls:24</span><span class="sub">Best Prop Trading Firm</span></div>
+              <div class="brand-item"><span class="badge">50</span><span class="sub">Deloitte Fast • 2023 Winner</span></div>
+              <div class="brand-item"><span class="badge">50</span><span class="sub">Deloitte Fast • 2022 Winner</span></div>
+              <div class="brand-item"><span class="badge">50</span><span class="sub">Deloitte Fast • 2021 Winner</span></div>
+              <div class="brand-item"><span class="badge">50</span><span class="sub">Deloitte Fast • 2020 Winner</span></div>
+              <div class="brand-item"><span class="k">EY Entrepreneur</span><span class="sub">2022 CZ • Tech Category</span></div>
+              <div class="brand-item"><i class="fa-solid fa-star text-emerald-400"></i><span class="k">4.8</span><span class="sub">Trustpilot</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer (same as home) -->
+    <footer class="border-t border-slate-800 bg-slate-900/90 text-slate-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div>
+            <h4 class="text-sm font-bold tracking-wide text-slate-400">DOWNLOAD OUR FTMO APP TO YOUR DEVICE</h4>
+            <div class="mt-4 flex gap-4 flex-wrap">
+              <a href="#" class="inline-flex items-center gap-3 rounded-md border border-slate-600 px-4 h-12 hover:border-slate-400">
+                <i class="fab fa-apple text-2xl"></i>
+                <div class="leading-tight">
+                  <div class="text-[10px] text-slate-400">Download on the</div>
+                  <div class="text-sm font-semibold">App Store</div>
+                </div>
+              </a>
+              <a href="#" class="inline-flex items-center gap-3 rounded-md border border-slate-600 px-4 h-12 hover:border-slate-400">
+                <i class="fab fa-google-play text-xl"></i>
+                <div class="leading-tight">
+                  <div class="text-[10px] text-slate-400">Download on</div>
+                  <div class="text-sm font-semibold">Google Play</div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold tracking-wide text-slate-400">STAY UPDATED WITH OUR NEWSLETTER!</h4>
+            <div class="mt-4 flex gap-3">
+              <input type="email" placeholder="Email" class="flex-1 h-12 rounded-md bg-slate-800 border border-slate-700 px-4 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <button class="h-12 px-5 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-bold">SUBSCRIBE</button>
+            </div>
+          </div>
+        </div>
+        <div class="mt-10">
+          <h4 class="text-sm font-bold tracking-wide text-slate-400">PAYMENT OPTIONS</h4>
+          <div class="mt-5 flex flex-wrap items-center gap-x-10 gap-y-4 text-2xl">
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-solid fa-building-columns"></i> Bank Transfer</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-brands fa-cc-mastercard"></i> Mastercard</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-brands fa-cc-visa"></i> VISA</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-brands fa-cc-discover"></i> Discover</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-brands fa-cc-paypal"></i> PayPal</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-solid fa-credit-card"></i> Maestro</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-solid fa-wallet"></i> Skrill</span>
+          </div>
+        </div>
+        <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+          <a href="cookie-policy.html" class="hover:text-white">Cookies</a>
+          <a href="imprint.html" class="hover:text-white">Imprint</a>
+          <a href="terms.html" class="hover:text-white">Terms & Conditions</a>
+          <a href="privacy.html" class="hover:text-white">Privacy Policy</a>
+        </div>
+        <div class="mt-8 text-sm text-slate-500">2025 © Copyright - FTMO.com Made with <span class="text-rose-400">❤</span> for trading</div>
+      </div>
+    </footer>
+
+    <script src="js/brand-strip.js" defer></script>
+    <script src="js/nav.js" defer></script>
+  </body>
+</html>

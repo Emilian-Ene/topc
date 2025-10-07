@@ -1,0 +1,30 @@
+/* FAQ page styles */
+:root{
+  --slate-700:#334155;
+  --slate-600:#475569;
+  --slate-500:#64748b;
+}
+.faq-container{max-width: 72rem; margin: 0 auto; padding: 1rem 1rem 3rem;}
+/* Center title and subtitle */
+.faq-container h1{ text-align:center; }
+.faq-meta{ text-align:center; font-size:1.125rem; color:#94a3b8; margin-bottom:.5rem; }
+.faq-search{position:relative;margin:1rem 0 1.25rem}
+.faq-search input{width:100%;height:2.75rem;border-radius:.5rem;background:#0f172a;color:#e2e8f0;border:1px solid #334155;padding:.5rem .75rem .5rem 2.25rem}
+.faq-search i{position:absolute;left:.75rem;top:.75rem;color:#94a3b8}
+.faq-list{display:flex;flex-direction:column;gap:.75rem}
+.faq-item{border:1px solid #334155;border-radius:.75rem;background:#0b1220}
+.faq-q{display:flex;gap:.75rem;align-items:center;justify-content:space-between;width:100%;padding:1rem 1rem;text-align:left;color:#e2e8f0;font-weight:700}
+.faq-q .q-text{display:flex;align-items:center;gap:.75rem}
+.faq-q .badge{font-size:.65rem;background:#1e293b;color:#93c5fd;border:1px solid #1f2937;border-radius:.5rem;padding:.15rem .4rem}
+.faq-q .chev{transition:transform .2s ease;color:#94a3b8}
+.faq-a{display:none;padding:0 1rem 1rem;color:#cbd5e1;line-height:1.6}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .chev{transform:rotate(90deg)}
+.faq-highlight{background:rgba(59,130,246,.12)}
+
+/* Small improvements */
+.faq-section-title{color:#e2e8f0;font-size:1.125rem;font-weight:800;margin:1.25rem 0 .5rem}
+.faq-meta{font-size:.75rem;color:#94a3b8;margin-bottom:.5rem}
+
+/* Responsive */
+@media (min-width:640px){.faq-container{padding:1.25rem 1.5rem 4rem}}

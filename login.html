@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login • Trading Outcome Probability Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/login.css" />
+  </head>
+  <body class="bg-slate-900 text-slate-300" style="font-family: 'Inter', sans-serif;">
+  <div class="min-h-screen flex items-center justify-center relative" style="z-index:1;">
+    <div class="trading-bg-anim" aria-hidden="true"></div>
+    <div class="login-card">
+      <a href="index.html" class="home-link" style="position:absolute;top:1.1rem;left:1.1rem;display:flex;align-items:center;gap:0.4rem;text-decoration:none;z-index:2;">
+        <svg class="w-8 h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="goldChevronLogin" x1="14" y1="12" x2="20" y2="12" gradientUnits="userSpaceOnUse">
+              <stop offset="0" stop-color="#f59e0b"/>
+              <stop offset="1" stop-color="#fbbf24"/>
+            </linearGradient>
+          </defs>
+          <g transform="rotate(45 12 12)">
+            <path d="M14 6 L20 12 L14 18 L14 15 L17 12 L14 9 Z" fill="url(#goldChevronLogin)"/>
+            <rect x="4.8" y="14" width="5.8" height="2" rx="0" fill="#22c55e"/>
+            <rect x="5.8" y="11" width="4.8" height="2" rx="0" fill="#ef4444"/>
+            <rect x="6.8" y="8" width="3.8" height="2" rx="0" fill="#22c55e"/>
+            <line x1="4.2" y1="15" x2="4.8" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+            <line x1="10.6" y1="15" x2="11.2" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+            <line x1="5.2" y1="12" x2="10.8" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+            <line x1="10.6" y1="12" x2="15.2" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+            <line x1="6.2" y1="9" x2="6.8" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+            <line x1="10.6" y1="9" x2="11.2" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+          </g>
+        </svg>
+  <span style="font-weight:800;font-size:1.1rem;background:linear-gradient(90deg,#fbbf24,#f59e0b);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;">TOPC</span>
+      </a>
+        <div class="login-header">
+          <span class="logo-circle"><i class="fa-solid fa-user-lock"></i></span>
+          <h1>Sign in to TOPC</h1>
+          <p class="subtitle">Access your dashboard and trading tools</p>
+        </div>
+        <form id="loginForm" class="login-form" autocomplete="off">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required placeholder="you@email.com" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required placeholder="Password" />
+          </div>
+          <div class="form-options">
+            <label class="remember"><input type="checkbox" id="remember" /> Remember me</label>
+            <a href="#" class="forgot">Forgot password?</a>
+          </div>
+          <button type="submit" class="login-btn">Sign In</button>
+        </form>
+        <div class="login-footer">
+          <span>Don't have an account?</span> <a href="#" class="signup-link">Sign up</a>
+        </div>
+        <div id="loginMessage" class="login-message"></div>
+      </div>
+    </div>
+    <script src="js/login.js"></script>
+  </body>
+</html>

@@ -58,13 +58,11 @@
           </a>
 
           <!-- Primary Nav (desktop) -->
-          <nav class="nav-desktop items-center gap-8 text-sm font-semibold text-slate-300">
-            <a href="#" class="hover:text-white flex items-center gap-1">How it works <i class="fa-solid fa-chevron-down text-[10px] opacity-70"></i></a>
-            <a href="#" class="hover:text-white">FAQ</a>
-            <a href="#" class="hover:text-white">Testimonials</a>
-            <a href="#" class="hover:text-white flex items-center gap-1">Trading <i class="fa-solid fa-chevron-down text-[10px] opacity-70"></i></a>
-            <a href="#" class="hover:text-white flex items-center gap-1">About us <i class="fa-solid fa-chevron-down text-[10px] opacity-70"></i></a>
-            <a href="#" class="hover:text-white">Academy</a>
+          <nav class="nav-desktop hidden xl:flex items-center gap-8 text-sm font-semibold text-slate-300">
+            <a href="faq.html" class="hover:text-white">FAQ</a>
+            <a href="testimonials.html" class="hover:text-white">Testimonials</a>
+            <a href="#" class="hover:text-white flex items-center gap-1">Trading</a>
+            <a href="about.html" class="hover:text-white flex items-center gap-1">About us</a>
           </nav>
 
           <!-- Right Side -->
@@ -73,7 +71,7 @@
             <a href="#" class="hidden">Client Area</a>
             <span class="hidden sm:block font-semibold text-slate-200">Ionut Emilian</span>
             <div class="w-8 h-8 rounded-full bg-blue-200 text-blue-800 flex items-center justify-center text-sm font-bold">IE</div>
-            <button id="navTrigger" class="nav-trigger hidden p-2 -mr-2 text-slate-300 hover:text-white" aria-label="Open menu">
+            <button id="navTrigger" class="nav-trigger xl:hidden p-2 -mr-2 text-slate-300 hover:text-white" aria-label="Open menu">
               <i class="fas fa-bars"></i>
             </button>
           </div>
@@ -89,12 +87,10 @@
         <button id="drawerCloseBtn" class="text-slate-300 hover:text-white text-xl" aria-label="Close menu"><i class="fas fa-xmark"></i></button>
       </div>
       <nav class="px-4 py-3 flex flex-col gap-4 text-base font-semibold text-slate-200">
-        <a href="#" class="flex items-center justify-between py-1">How it works <i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
-        <a href="#" class="py-1">FAQ</a>
-        <a href="#" class="py-1">Testimonials</a>
+        <a href="faq.html" class="py-1">FAQ</a>
+        <a href="testimonials.html" class="py-1">Testimonials</a>
         <a href="#" class="flex items-center justify-between py-1">Trading <i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
-        <a href="#" class="flex items-center justify-between py-1">About us <i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
-        <a href="#" class="py-1">Academy</a>
+        <a href="about.html" class="flex items-center justify-between py-1">About us <i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
         <div class="py-2 border-t border-slate-700/80"></div>
         <a href="#" class="flex items-center justify-between py-1"><span class="flex items-center gap-2"><span class="text-xl">🇬🇧</span> EN</span><i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
         <div class="pt-2">
@@ -1838,6 +1834,8 @@
       </div>
     </div>
 
+    <!-- Drawer script centralized -->
+    <script src="js/nav.js" defer></script>
     <script src="./js/dashboard.js" defer></script>
     
   </body>

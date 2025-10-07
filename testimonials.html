@@ -3,53 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home • Grow & Monetize Your Demo Trading</title>
+    <title>Testimonials • Trading Outcome Probability Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-
-    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/testimonials.css" />
     <link rel="stylesheet" href="css/brand-strip.css" />
-    
   </head>
   <body class="text-slate-300 bg-slate-900" style="font-family: 'Inter', sans-serif;">
-    <!-- Site Header (same as app) -->
+    <!-- Header -->
     <header class="sticky top-0 z-50 bg-slate-800/95 backdrop-blur border-b border-slate-700/80">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="h-14 flex items-center gap-6">
-          <!-- Brand -->
           <a href="index.html" class="flex items-center gap-2 shrink-0">
-            <!-- Geometric mark with colored bars; horizontal wicks on all bars; right chevron gold -->
             <svg class="w-10 h-10" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
               <defs>
-                <linearGradient id="goldChevron" x1="14" y1="12" x2="20" y2="12" gradientUnits="userSpaceOnUse">
+                <linearGradient id="goldChevronTesti" x1="14" y1="12" x2="20" y2="12" gradientUnits="userSpaceOnUse">
                   <stop offset="0" stop-color="#f59e0b"/>
                   <stop offset="1" stop-color="#fbbf24"/>
                 </linearGradient>
               </defs>
               <g transform="rotate(45 12 12)">
-                <!-- Right chevron (gold) -->
-                <path d="M14 6 L20 12 L14 18 L14 15 L17 12 L14 9 Z" fill="url(#goldChevron)"/>
-                <!-- Left ascending bars (square corners) -->
+                <path d="M14 6 L20 12 L14 18 L14 15 L17 12 L14 9 Z" fill="url(#goldChevronTesti)"/>
                 <rect x="4.8" y="14" width="5.8" height="2" rx="0" fill="#22c55e"/>
                 <rect x="5.8" y="11" width="4.8" height="2" rx="0" fill="#ef4444"/>
                 <rect x="6.8" y="8" width="3.8" height="2" rx="0" fill="#22c55e"/>
-                <!-- Horizontal wicks (left/right) for each bar - thinner with square ends -->
-                <!-- Bottom green bar center y=15, edges x=[4.8,10.6] -->
                 <line x1="4.2" y1="15" x2="4.8" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
                 <line x1="10.6" y1="15" x2="11.2" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
-                <!-- Middle red bar center y=12, edges x=[5.8,10.6] -->
-                <line x1="5.2" y1="12" x2="10.8" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
-                <line x1="10.6" y1="12" x2="15.2" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
-                <!-- Top green bar center y=9, edges x=[6.8,10.6] -->
+                <line x1="5.2" y1="12" x2="5.8" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="10.6" y1="12" x2="11.2" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
                 <line x1="6.2" y1="9" x2="6.8" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
                 <line x1="10.6" y1="9" x2="11.2" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
               </g>
@@ -58,23 +42,15 @@
             <span class="ml-1 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">10</span>
             <span class="ml-1 text-[10px] uppercase tracking-wide text-slate-400">Years</span>
           </a>
-
-          <!-- Primary Nav (desktop) -->
-          <nav class="nav-desktop hidden xl:flex items-center gap-8 text-sm font-semibold text-slate-300">
+          <nav class="hidden xl:flex items-center gap-8 text-sm font-semibold text-slate-300">
             <a href="faq.html" class="hover:text-white">FAQ</a>
-            <a href="testimonials.html" class="hover:text-white">Testimonials</a>
-            <a href="#" class="hover:text-white flex items-center gap-1">Trading</a>
-            <a href="about.html" class="hover:text-white flex items-center gap-1">About us</a>
-            <a href="login.html" class="hover:text-white">Login</a>
+            <a href="testimonials.html" class="text-white">Testimonials</a>
+            <a href="dashboard.html" class="hover:text-white">Trading</a>
+            <a href="about.html" class="hover:text-white">About us</a>
           </nav>
-
-          <!-- Right Side -->
           <div class="ml-auto flex items-center gap-4">
             <a href="dashboard.html" class="hidden md:inline text-blue-400 hover:text-blue-300 font-semibold">Client Area</a>
-            <!-- User name hidden on Home page -->
-            <!-- <span class="font-semibold text-slate-200">Ionut Emilian</span> -->
-            <div class="w-8 h-8 rounded-full bg-blue-200 text-blue-800 flex items-center justify-center text-sm font-bold hidden">IE</div>
-            <button id="navTrigger" class="nav-trigger xl:hidden p-2 -mr-2 text-slate-300 hover:text-white" aria-label="Open menu">
+            <button id="navTrigger" class="xl:hidden p-2 -mr-2 text-slate-300 hover:text-white" aria-label="Open menu">
               <i class="fas fa-bars"></i>
             </button>
           </div>
@@ -92,107 +68,97 @@
       <nav class="px-4 py-3 flex flex-col gap-4 text-base font-semibold text-slate-200">
         <a href="faq.html" class="py-1">FAQ</a>
         <a href="testimonials.html" class="py-1">Testimonials</a>
-        <a href="#" class="flex items-center justify-between py-1">Trading <i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
-        <a href="about.html" class="flex items-center justify-between py-1">About us <i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
+        <a href="dashboard.html" class="py-1">Trading</a>
+        <a href="about.html" class="py-1">About us</a>
         <div class="py-2 border-t border-slate-700/80"></div>
         <a href="#" class="flex items-center justify-between py-1"><span class="flex items-center gap-2"><span class="text-xl">🇬🇧</span> EN</span><i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
         <div class="pt-2">
-          <a href="#" class="inline-flex w-full items-center justify-center rounded-md bg-blue-600 hover:bg-blue-700 text-white font-bold h-11">Client Area</a>
+          <a href="dashboard.html" class="inline-flex w-full items-center justify-center rounded-md bg-blue-600 hover:bg-blue-700 text-white font-bold h-11">Client Area</a>
         </div>
       </nav>
     </aside>
 
-    <!-- Promo bar -->
-    <div class="bg-[#2b2b2b] text-amber-300 text-sm">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-8 flex items-center gap-3">
-        <i class="fa-solid fa-bolt"></i>
-        <span class="text-amber-300/90">Special Deal</span>
-        <span class="text-slate-200">FTMO Celebrates 10 Years</span>
-        <i class="fa-solid fa-chevron-right text-xs opacity-70"></i>
-      </div>
-    </div>
-
-    <!-- HERO -->
-    <section class="relative">
-      <div class="absolute inset-0 bg-slate-900">
-        <picture>
-          <source srcset="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1920&q=80" media="(min-width: 1024px)" />
-          <source srcset="https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1280&q=80" media="(min-width: 640px)" />
-          <img
-            src="https://images.unsplash.com/photo-1556761175-4b46a572b786?auto=format&fit=crop&w=800&q=80"
-            alt="Trading background"
-            class="w-full h-full object-cover"
-            loading="eager"
-            onerror="this.style.display='none'"
-          />
-        </picture>
-        <div class="absolute inset-0 bg-slate-900/80"></div>
-      </div>
-      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-16 sm:pt-16 sm:pb-24">
-        <div class="flex items-center gap-3 text-slate-300 text-sm">
-          <span class="text-green-400 font-semibold">Excellent</span>
+    <main class="testi-container">
+      <!-- Hero / heading -->
+      <div class="text-center">
+        <p class="uppercase tracking-widest text-emerald-400 font-bold text-xs">Trusted by traders worldwide</p>
+        <h1 class="mt-2 text-4xl sm:text-5xl font-extrabold text-white tracking-tight">Trustpilot Reviews</h1>
+        <div class="mt-4 rating-badge mx-auto">
+          <span class="score">4.8</span>
           <span class="flex items-center gap-1 text-emerald-400">
-            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
           </span>
-          <a href="#" class="underline text-slate-300/90">Trustpilot</a>
+          <span class="text-slate-300 text-sm">on Trustpilot</span>
         </div>
-        <h1 class="mt-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight tracking-tight">
-          GROW & MONETIZE<br class="hidden sm:block" />YOUR DEMO TRADING
-        </h1>
-        <p class="mt-6 text-slate-300 max-w-3xl text-base sm:text-lg">
-          Master your trading skills on our simulated trading platform, improve your trading on a demo FTMO Account with up to $200,000 and get a reward of up to 90% of your simulated profits.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-4">
-          <a href="#" class="inline-flex items-center justify-center px-5 h-11 rounded-md bg-blue-600 hover:bg-blue-700 font-bold text-white">FTMO Challenge</a>
-          <a href="#" class="inline-flex items-center justify-center px-5 h-11 rounded-md border border-slate-500 hover:border-slate-400 text-white">Free Trial</a>
-        </div>
+        <p class="mt-3 text-slate-400 text-lg">Real traders, real results. Read what our users say about the dashboard, simulations, and risk tools.</p>
       </div>
-    </section>
 
-    <!-- PROMO CARD -->
-    <section class="relative z-10 -mt-10 pb-12">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="rounded-xl border border-slate-700 bg-slate-800/80 overflow-hidden shadow-lg">
-          <div class="grid grid-cols-1 md:grid-cols-2">
-            <div class="p-6 sm:p-8">
-              <div class="inline-flex items-center gap-2 rounded-md bg-amber-500/20 text-amber-300 px-3 py-1 text-sm font-bold -ml-1 mb-3">
-                <span class="-rotate-12">-19%</span>
-              </div>
-              <h3 class="text-xl sm:text-2xl font-extrabold text-white">Celebrate 10 years of FTMO with $100K FTMO Challenge</h3>
-              <p class="mt-2 text-slate-300 text-sm sm:text-base">Better price. Better chance to show your trading edge.</p>
-              <a href="#" class="mt-4 inline-flex items-center justify-center px-4 h-10 rounded-md bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold">Claim Discount</a>
-            </div>
-            <div class="hidden md:block relative min-h-[220px]">
-              <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?q=80&w=1200&auto=format&fit=crop" alt="Promo" class="absolute inset-0 w-full h-full object-cover opacity-70" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      <!-- Reviews scroller -->
+      <section class="relative mt-8">
+        <button id="reviewsPrev" class="nav-arrow left" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
+        <button id="reviewsNext" class="nav-arrow right" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+        <div id="reviewsScroller" class="scroller flex gap-4 overflow-x-auto snap-x snap-mandatory pb-3">
+          <!-- Card template: repeat with sample content -->
+          <article class="card min-w-[300px] max-w-sm p-4 snap-start">
+            <div class="flex items-center gap-2 text-emerald-400 text-sm mb-2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <h3 class="title">Best prop firm tools</h3>
+            <p class="meta">Francis • Verified • 1 hour ago</p>
+            <p class="mt-2 text-slate-300">The journal and Risk of Ruin features keep me disciplined. Importing CSV was easy and the charts are gorgeous.</p>
+          </article>
 
-    <!-- STATS -->
-    <section class="pb-16">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div class="p-4">
-            <p class="text-3xl font-extrabold text-white">3M+</p>
-            <p class="text-slate-400 text-sm">Customers worldwide</p>
-          </div>
-          <div class="p-4">
-            <p class="text-3xl font-extrabold text-white">4.8/5</p>
-            <p class="text-slate-400 text-sm">Trustpilot</p>
-          </div>
-          <div class="p-4">
-            <p class="text-3xl font-extrabold text-white">$450M+</p>
-            <p class="text-slate-400 text-sm">Paid in rewards</p>
-          </div>
-          <div class="p-4">
-            <p class="text-3xl font-extrabold text-white">140+</p>
-            <p class="text-slate-400 text-sm">Countries served</p>
-          </div>
+          <article class="card min-w-[300px] max-w-sm p-4 snap-start">
+            <div class="flex items-center gap-2 text-emerald-400 text-sm mb-2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+            <h3 class="title">Clear metrics that matter</h3>
+            <p class="meta">Marta • Verified • 3 hours ago</p>
+            <p class="mt-2 text-slate-300">SQN, Recovery Factor, and streak Z-Score helped me see the system objectively. Love the explanations.</p>
+          </article>
+
+          <article class="card min-w-[300px] max-w-sm p-4 snap-start">
+            <div class="flex items-center gap-2 text-emerald-400 text-sm mb-2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i></div>
+            <h3 class="title">Fat-tail simulation is eye-opening</h3>
+            <p class="meta">Chris • Verified • 5 hours ago</p>
+            <p class="mt-2 text-slate-300">Setting Win/Loss R thresholds showed how big outliers drive results. The VaR limit mode is super useful.</p>
+          </article>
+
+          <article class="card min-w-[300px] max-w-sm p-4 snap-start">
+            <div class="flex items-center gap-2 text-emerald-400 text-sm mb-2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <h3 class="title">Daily outcome charts guide me</h3>
+            <p class="meta">Zei • Verified • Yesterday</p>
+            <p class="mt-2 text-slate-300">The weekday win/loss rates make me avoid Fridays. Simple and effective risk control.</p>
+          </article>
+
+          <article class="card min-w-[300px] max-w-sm p-4 snap-start">
+            <div class="flex items-center gap-2 text-emerald-400 text-sm mb-2"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+            <h3 class="title">AI coach nailed my weaknesses</h3>
+            <p class="meta">Ionut • Verified • This week</p>
+            <p class="mt-2 text-slate-300">The AI summary tied together stats and pointed at revenge trades after losses. Actionable tips!</p>
+          </article>
         </div>
-      </div>
-    </section>
+        <div class="mt-6 text-center">
+          <a href="#" class="inline-flex items-center justify-center px-5 h-11 rounded-md bg-blue-600 hover:bg-blue-700 font-bold text-white">All Reviews</a>
+        </div>
+      </section>
+
+      <!-- Trust badges -->
+      <section class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div class="p-4 bg-slate-800/40 rounded-lg border border-slate-700">
+          <p class="text-3xl font-extrabold text-white">4.8/5</p>
+          <p class="text-slate-400 text-sm">Trustpilot</p>
+        </div>
+        <div class="p-4 bg-slate-800/40 rounded-lg border border-slate-700">
+          <p class="text-3xl font-extrabold text-white">3M+</p>
+          <p class="text-slate-400 text-sm">Users</p>
+        </div>
+        <div class="p-4 bg-slate-800/40 rounded-lg border border-slate-700">
+          <p class="text-3xl font-extrabold text-white">90%</p>
+          <p class="text-slate-400 text-sm">Payout share (simulated)</p>
+        </div>
+        <div class="p-4 bg-slate-800/40 rounded-lg border border-slate-700">
+          <p class="text-3xl font-extrabold text-white">140+</p>
+          <p class="text-slate-400 text-sm">Countries</p>
+        </div>
+      </section>
+    </main>
 
     <!-- Brand slider strip above footer -->
     <section class="brand-strip">
@@ -215,9 +181,9 @@
       </div>
     </section>
 
+    <!-- Footer (same as home) -->
     <footer class="border-t border-slate-800 bg-slate-900/90 text-slate-300">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <!-- Top: App + Newsletter -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           <div>
             <h4 class="text-sm font-bold tracking-wide text-slate-400">DOWNLOAD OUR FTMO APP TO YOUR DEVICE</h4>
@@ -246,8 +212,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Payment options -->
         <div class="mt-10">
           <h4 class="text-sm font-bold tracking-wide text-slate-400">PAYMENT OPTIONS</h4>
           <div class="mt-5 flex flex-wrap items-center gap-x-10 gap-y-4 text-2xl">
@@ -260,30 +224,18 @@
             <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-solid fa-wallet"></i> Skrill</span>
           </div>
         </div>
-
-        <!-- Legal links -->
         <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
           <a href="cookie-policy.html" class="hover:text-white">Cookies</a>
           <a href="imprint.html" class="hover:text-white">Imprint</a>
           <a href="terms.html" class="hover:text-white">Terms & Conditions</a>
           <a href="privacy.html" class="hover:text-white">Privacy Policy</a>
         </div>
-
-        <!-- Disclaimer -->
-        <div class="mt-8 text-xs text-slate-400 leading-relaxed">
-          All information provided on this site is intended solely for educational purposes related to trading on financial markets and does not serve in any way as a specific investment recommendation, business recommendation, investment opportunity analysis or similar general recommendation regarding the trading of investment instruments. FTMO only provides services of simulated trading and educational tools for traders. The information on this site is not directed at residents in any country or jurisdiction where such distribution or use would be contrary to local laws or regulations. FTMO companies do not act as a broker and do not accept any deposits. The offered technical solution for the FTMO platforms and data feed is powered by liquidity providers.
-        </div>
-
-        <!-- Copyright -->
-        <div class="mt-8 text-sm text-slate-500">
-          2025 © Copyright - FTMO.com Made with <span class="text-rose-400">❤</span> for trading
-        </div>
+        <div class="mt-8 text-sm text-slate-500">2025 © Copyright - FTMO.com Made with <span class="text-rose-400">❤</span> for trading</div>
       </div>
     </footer>
 
-    <!-- Drawer script centralized -->
-    <script src="js/nav.js" defer></script>
-    <script src="./js/dashboard.js" defer></script>
+    <script src="js/testimonials.js" defer></script>
     <script src="js/brand-strip.js" defer></script>
+    <script src="js/nav.js" defer></script>
   </body>
 </html>

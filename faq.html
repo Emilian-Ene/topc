@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ • Trading Outcome Probability Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/faq.css" />
+    <link rel="stylesheet" href="css/brand-strip.css" />
+  </head>
+  <body class="text-slate-300 bg-slate-900" style="font-family: 'Inter', sans-serif;">
+    <!-- Header (compact, consistent with site) -->
+    <header class="sticky top-0 z-50 bg-slate-800/95 backdrop-blur border-b border-slate-700/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="h-14 flex items-center gap-6">
+          <a href="index.html" class="flex items-center gap-2 shrink-0">
+            <svg class="w-10 h-10" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="goldChevronFaq" x1="14" y1="12" x2="20" y2="12" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#f59e0b"/>
+                  <stop offset="1" stop-color="#fbbf24"/>
+                </linearGradient>
+              </defs>
+              <g transform="rotate(45 12 12)">
+                <path d="M14 6 L20 12 L14 18 L14 15 L17 12 L14 9 Z" fill="url(#goldChevronFaq)"/>
+                <rect x="4.8" y="14" width="5.8" height="2" rx="0" fill="#22c55e"/>
+                <rect x="5.8" y="11" width="4.8" height="2" rx="0" fill="#ef4444"/>
+                <rect x="6.8" y="8" width="3.8" height="2" rx="0" fill="#22c55e"/>
+                <line x1="4.2" y1="15" x2="4.8" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="10.6" y1="15" x2="11.2" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="5.2" y1="12" x2="5.8" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="10.6" y1="12" x2="11.2" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="6.2" y1="9" x2="6.8" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="10.6" y1="9" x2="11.2" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+              </g>
+            </svg>
+            <span class="font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">TOPC</span>
+            <span class="ml-1 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">10</span>
+            <span class="ml-1 text-[10px] uppercase tracking-wide text-slate-400">Years</span>
+          </a>
+          <nav class="hidden xl:flex items-center gap-8 text-sm font-semibold text-slate-300">
+            <a href="faq.html" class="text-white">FAQ</a>
+            <a href="testimonials.html" class="hover:text-white">Testimonials</a>
+            <a href="dashboard.html" class="hover:text-white">Trading</a>
+            <a href="about.html" class="hover:text-white">About us</a>
+          </nav>
+          <div class="ml-auto flex items-center gap-4">
+            <a href="dashboard.html" class="hidden md:inline text-blue-400 hover:text-blue-300 font-semibold">Client Area</a>
+            <button id="navTrigger" class="xl:hidden p-2 -mr-2 text-slate-300 hover:text-white" aria-label="Open menu">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Off-canvas drawer (right) -->
+    <div id="drawerOverlay" class="fixed inset-0 bg-black/50 z-50 hidden"></div>
+    <aside id="drawerPanel" class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-slate-800 border-l border-slate-700 z-50 transform translate-x-full transition-transform duration-300">
+      <div class="h-14 flex items-center justify-between px-4 border-b border-slate-700/80">
+        <button class="text-slate-300 hover:text-white"><i class="fas fa-magnifying-glass"></i></button>
+        <button id="drawerCloseBtn" class="text-slate-300 hover:text-white text-xl" aria-label="Close menu"><i class="fas fa-xmark"></i></button>
+      </div>
+      <nav class="px-4 py-3 flex flex-col gap-4 text-base font-semibold text-slate-200">
+        <a href="faq.html" class="py-1">FAQ</a>
+        <a href="testimonials.html" class="py-1">Testimonials</a>
+        <a href="dashboard.html" class="py-1">Trading</a>
+        <a href="about.html" class="py-1">About us</a>
+        <div class="py-2 border-t border-slate-700/80"></div>
+        <a href="#" class="flex items-center justify-between py-1"><span class="flex items-center gap-2"><span class="text-xl">🇬🇧</span> EN</span><i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
+        <div class="pt-2">
+          <a href="dashboard.html" class="inline-flex w-full items-center justify-center rounded-md bg-blue-600 hover:bg-blue-700 text-white font-bold h-11">Client Area</a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="faq-container">
+      <h1 class="text-4xl font-extrabold text-white tracking-tight mb-2">Frequently Asked Questions</h1>
+      <p class="faq-meta mt-2 text-lg text-slate-400">Covers dashboard interactions, CSV import, simulations, and the meaning of every key metric.</p>
+
+      <div class="faq-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="faqSearch" type="search" placeholder="Search questions or metrics..." />
+      </div>
+
+      <!-- Getting Started -->
+      <div class="faq-section">
+        <div class="flex items-center justify-between">
+          <h2 class="faq-section-title">Getting Started & Data</h2>
+          <button class="faq-toggle-all text-xs px-2 py-1 rounded border border-slate-600 text-slate-300 hover:bg-slate-800">Expand all</button>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item">
+            <button class="faq-q"><span class="q-text"><span class="badge">Basics</span> How do I add a trade to the journal?</span><i class="fa-solid fa-chevron-right chev"></i></button>
+            <div class="faq-a">Use the Trade Journal on the left: fill Date, Asset, P&L (£), 1R Risk (£), Outcome, and optional Tags, then click “Add Trade”. Entries are saved to your browser’s localStorage.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q"><span class="q-text"><span class="badge">CSV</span> Can I import trades from a CSV file?</span><i class="fa-solid fa-chevron-right chev"></i></button>
+            <div class="faq-a">Yes. Click “Import from CSV”. Required columns: Date, Asset, P&L, Risk(1R). Optional: Tags (semicolon-separated). Date format: DD/MM/YYYY HH:mm. Invalid rows are skipped and reported.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q"><span class="q-text"><span class="badge">Filter</span> How do tag filters work?</span><i class="fa-solid fa-chevron-right chev"></i></button>
+            <div class="faq-a">Below Dashboard → “Filter by Tag”, click any tag pill to filter stats and charts to those trades. Click “Clear Filter” to reset.</div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q"><span class="q-text"><span class="badge">Balance</span> What does Initial Balance do?</span><i class="fa-solid fa-chevron-right chev"></i></button>
+            <div class="faq-a">Initial Balance seeds the equity curve and Current Balance. Net P&L is applied on top of this number.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Key Metrics -->
+      <div class="faq-section">
+        <div class="flex items-center justify-between">
+          <h2 class="faq-section-title">Key Metrics (from Full Statistics)</h2>
+          <button class="faq-toggle-all text-xs px-2 py-1 rounded border border-slate-600 text-slate-300 hover:bg-slate-800">Expand all</button>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Net P&L</span> What is Net P&L?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">The sum of all individual trade profits and losses. It’s your raw outcome before risk adjustment.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Profit Factor</span> What is Profit Factor?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Total Gross Profit ÷ Total Gross Loss. Above 1.0 means profits exceed losses; higher values indicate stronger edge.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Win Rate</span> How is Win Rate defined?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Percentage of profitable trades. It’s the MLE of your success probability and updates with filters applied.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">R-Expectancy</span> What is EV per Trade (R)?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Expected value per trade in R-multiples (wins and losses averaged). Positive values suggest a scalable edge.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Risk-Reward</span> What does Risk-Reward mean?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Average R per win ÷ average R per loss. Combine with Win Rate to understand strategy shape.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Break-even</span> What is Break-Even Win Rate?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Minimum Win Rate required so average gains cover average losses given current risk-reward.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Drawdown</span> What is Max vs Current Drawdown?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Max Drawdown is the worst historical equity drop; Current Drawdown is distance from the latest equity peak now.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Recovery</span> What is Recovery Factor?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Net Profit ÷ Max Drawdown. Shows resilience. >2.0 is typically considered strong.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Sharpe</span> What is the Sharpe Ratio?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Risk-adjusted return using total volatility. Useful for comparing systems on a normalized basis.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Sortino</span> What is the Sortino Ratio?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Returns per unit of downside risk. Ignores upside volatility for a more trader-relevant view.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Std Dev</span> What is Std. Dev. of P&L?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Measures variability of P&L per trade in currency terms. Larger values mean more swingy outcomes.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Z-Score</span> What does Z-Score (Streaks) tell me?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Assesses streak randomness. |Z| ≤ 1.96 ≈ random; outside may indicate psychological or process patterns.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">SQN</span> What is System Quality Number (SQN)?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Van Tharp’s system quality. <1.6 Junk, 1.6–1.9 Average, 2.0–2.4 Good, 2.5–2.9 Excellent, >3.0 Holy Grail. Needs ~30+ trades.</div></div>
+        </div>
+      </div>
+
+      <!-- Risk Tools & Simulation -->
+      <div class="faq-section">
+        <div class="flex items-center justify-between">
+          <h2 class="faq-section-title">Risk Tools & Simulation</h2>
+          <button class="faq-toggle-all text-xs px-2 py-1 rounded border border-slate-600 text-slate-300 hover:bg-slate-800">Expand all</button>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Position Size</span> How do I use the Position Size calculator?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Enter Balance, Risk %, Stop Loss (points/pips), and Value per point. Outputs Amount to Risk and Position Size for consistent risk.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Risk of Ruin</span> How is Risk of Ruin computed?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Uses your filtered Win Rate and R-Expectancy with chosen Risk % and Drawdown to estimate the probability of hitting that loss limit.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">VaR</span> What does VaR 5% (Max Loss) mean?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">5th percentile simulated loss over the next N trades (Trades per Series). Switch to “Set Limit” to define your own VaR cap and see breach odds.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Fat-tail</span> What are “fat-tail” events and thresholds?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Extreme R outcomes beyond Loss ≤ threshold or Win ≥ threshold. Auto mode estimates their probability and average P&L from your data.</div></div>
+        </div>
+      </div>
+
+      <!-- Predictive Charts & AI -->
+      <div class="faq-section">
+        <div class="flex items-center justify-between">
+          <h2 class="faq-section-title">Predictive Charts & AI</h2>
+          <button class="faq-toggle-all text-xs px-2 py-1 rounded border border-slate-600 text-slate-300 hover:bg-slate-800">Expand all</button>
+        </div>
+        <div class="faq-list">
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Daily</span> What is Daily Outcome Prediction?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Visualizes Win and Loss Rates by weekday to spotlight favorable or difficult days. Helpful for scheduling and caution zones.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Markov</span> What is Outcome Predictability (Markov)?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Shows conditional probabilities for the next trade after a Win vs after a Loss. Reveals pressing advantage or revenge-trading risk.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">Sequential</span> What is Advanced Sequential Analysis?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Estimates the most likely weekday for the next win/loss based on the last outcome. Highlights weekly rhythms.</div></div>
+          <div class="faq-item"><button class="faq-q"><span class="q-text"><span class="badge">AI Coach</span> How do I use the AI Trading Coach?</span><i class="fa-solid fa-chevron-right chev"></i></button><div class="faq-a">Enter a Google AI (Gemini) API key, start analysis, then ask follow-ups. The coach interprets metrics and cross-checks contradictions.</div></div>
+        </div>
+      </div>
+
+      <div class="h-10"></div>
+    </main>
+
+    <!-- Brand slider strip above footer -->
+    <section class="brand-strip">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="brand-viewport">
+          <div class="brand-track" data-duplicate>
+            <div class="brand-seq">
+              <div class="brand-item"><span class="k">Forbes</span></div>
+              <div class="brand-item"><span class="k">fmls:23</span><span class="sub">Best Prop Trading Firm</span></div>
+              <div class="brand-item"><span class="k">fmls:24</span><span class="sub">Best Prop Trading Firm</span></div>
+              <div class="brand-item"><span class="badge">50</span><span class="sub">Deloitte Fast • 2023 Winner</span></div>
+              <div class="brand-item"><span class="badge">50</span><span class="sub">Deloitte Fast • 2022 Winner</span></div>
+              <div class="brand-item"><span class="badge">50</span><span class="sub">Deloitte Fast • 2021 Winner</span></div>
+              <div class="brand-item"><span class="badge">50</span><span class="sub">Deloitte Fast • 2020 Winner</span></div>
+              <div class="brand-item"><span class="k">EY Entrepreneur</span><span class="sub">2022 CZ • Tech Category</span></div>
+              <div class="brand-item"><i class="fa-solid fa-star text-emerald-400"></i><span class="k">4.8</span><span class="sub">Trustpilot</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Site Footer (copied from Home page) -->
+    <footer class="border-t border-slate-800 bg-slate-900/90 text-slate-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <!-- Top: App + Newsletter -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div>
+            <h4 class="text-sm font-bold tracking-wide text-slate-400">DOWNLOAD OUR FTMO APP TO YOUR DEVICE</h4>
+            <div class="mt-4 flex gap-4 flex-wrap">
+              <a href="#" class="inline-flex items-center gap-3 rounded-md border border-slate-600 px-4 h-12 hover:border-slate-400">
+                <i class="fab fa-apple text-2xl"></i>
+                <div class="leading-tight">
+                  <div class="text-[10px] text-slate-400">Download on the</div>
+                  <div class="text-sm font-semibold">App Store</div>
+                </div>
+              </a>
+              <a href="#" class="inline-flex items-center gap-3 rounded-md border border-slate-600 px-4 h-12 hover:border-slate-400">
+                <i class="fab fa-google-play text-xl"></i>
+                <div class="leading-tight">
+                  <div class="text-[10px] text-slate-400">Download on</div>
+                  <div class="text-sm font-semibold">Google Play</div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold tracking-wide text-slate-400">STAY UPDATED WITH OUR NEWSLETTER!</h4>
+            <div class="mt-4 flex gap-3">
+              <input type="email" placeholder="Email" class="flex-1 h-12 rounded-md bg-slate-800 border border-slate-700 px-4 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <button class="h-12 px-5 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-bold">SUBSCRIBE</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment options -->
+        <div class="mt-10">
+          <h4 class="text-sm font-bold tracking-wide text-slate-400">PAYMENT OPTIONS</h4>
+          <div class="mt-5 flex flex-wrap items-center gap-x-10 gap-y-4 text-2xl">
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-solid fa-building-columns"></i> Bank Transfer</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-brands fa-cc-mastercard"></i> Mastercard</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-brands fa-cc-visa"></i> VISA</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-brands fa-cc-discover"></i> Discover</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-brands fa-cc-paypal"></i> PayPal</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-solid fa-credit-card"></i> Maestro</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-solid fa-wallet"></i> Skrill</span>
+          </div>
+        </div>
+
+        <!-- Legal links -->
+        <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+          <a href="cookie-policy.html" class="hover:text-white">Cookies</a>
+          <a href="imprint.html" class="hover:text-white">Imprint</a>
+          <a href="terms.html" class="hover:text-white">Terms & Conditions</a>
+          <a href="privacy.html" class="hover:text-white">Privacy Policy</a>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="mt-8 text-xs text-slate-400 leading-relaxed">
+          All information provided on this site is intended solely for educational purposes related to trading on financial markets and does not serve in any way as a specific investment recommendation, business recommendation, investment opportunity analysis or similar general recommendation regarding the trading of investment instruments. FTMO only provides services of simulated trading and educational tools for traders. The information on this site is not directed at residents in any country or jurisdiction where such distribution or use would be contrary to local laws or regulations. FTMO companies do not act as a broker and do not accept any deposits. The offered technical solution for the FTMO platforms and data feed is powered by liquidity providers.
+        </div>
+
+        <!-- Copyright -->
+        <div class="mt-8 text-sm text-slate-500">
+          2025 © Copyright - FTMO.com Made with <span class="text-rose-400">❤</span> for trading
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/faq.js" defer></script>
+    <script src="js/brand-strip.js" defer></script>
+    <script src="js/nav.js" defer></script>
+  </body>
+</html>

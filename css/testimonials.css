@@ -1,0 +1,15 @@
+/* Testimonials page custom tweaks (Tailwind handles most styles) */
+.testi-container{max-width:80rem;margin:0 auto;padding:1rem 1rem 4rem}
+.rating-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(16,185,129,.12);color:#34d399;border:1px solid rgba(16,185,129,.35);padding:.35rem .6rem;border-radius:.5rem;font-weight:800}
+.rating-badge .score{font-size:1.25rem;line-height:1}
+.scroller{scroll-behavior:smooth}
+.scroller::-webkit-scrollbar{height:8px}
+.scroller::-webkit-scrollbar-thumb{background:#334155;border-radius:9999px}
+.card{background:#0b1220;border:1px solid #334155;border-radius:.75rem}
+.card .title{color:#e2e8f0;font-weight:700}
+.card .meta{font-size:.75rem;color:#94a3b8}
+.nav-arrow{position:absolute;top:50%;transform:translateY(-50%);background:#0f172a;border:1px solid #334155;color:#cbd5e1;border-radius:.5rem;width:2.25rem;height:2.25rem;display:flex;align-items:center;justify-content:center}
+.nav-arrow:hover{background:#111827}
+.nav-arrow.left{left:-.5rem}
+.nav-arrow.right{right:-.5rem}
+@media(min-width:640px){.testi-container{padding:1.25rem 1.5rem 4.5rem}.nav-arrow.left{left:-1.25rem}.nav-arrow.right{right:-1.25rem}}

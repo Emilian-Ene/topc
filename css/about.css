@@ -1,0 +1,12 @@
+/* About page tweaks */
+.about-container{max-width:72rem;margin:0 auto;padding:1rem 1rem 4rem}
+.kpi{background:#0b1220;border:1px solid #334155;border-radius:.75rem;padding:1rem}
+.kpi .label{font-size:.75rem;color:#94a3b8}
+.kpi .value{font-weight:800;color:#e2e8f0;font-size:1.5rem}
+.value-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(59,130,246,.12);color:#93c5fd;border:1px solid rgba(59,130,246,.3);padding:.25rem .5rem;border-radius:.5rem;font-size:.75rem}
+.form-card{background:#0b1220;border:1px solid #334155;border-radius:.75rem}
+.form-card input,.form-card textarea,.form-card select{background:#0f172a;border:1px solid #334155;color:#e2e8f0;border-radius:.5rem;padding:.6rem .75rem}
+.form-card input:focus,.form-card textarea:focus,.form-card select:focus{outline:none;box-shadow:0 0 0 2px rgba(59,130,246,.5)}
+.form-help{font-size:.75rem;color:#94a3b8}
+.success-box{display:none;margin-top:1rem;border:1px solid rgba(16,185,129,.35);background:rgba(16,185,129,.12);color:#34d399;border-radius:.5rem;padding:.75rem}
+.success-box.show{display:block}
