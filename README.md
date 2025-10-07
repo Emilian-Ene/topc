@@ -41,4 +41,4 @@ The dashboard can generate an AI analysis using Google Gemini.
 - Data is stored in `localStorage` (no backend required).
 
 ## License
-TBD.
+MIT — see `LICENSE` for details.
