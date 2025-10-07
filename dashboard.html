@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trading Outcome Probability Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css">
+    
+  </head>
+
+  <body class="text-slate-300">
+    <!-- Top Site Header -->
+    <header class="sticky top-0 z-50 bg-slate-800/95 backdrop-blur border-b border-slate-700/80">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="h-14 flex items-center gap-6">
+          <!-- Brand -->
+          <a href="index.html" class="flex items-center gap-2 shrink-0">
+            <!-- Candlestick mark + gold chevron (same as Home) -->
+            <svg class="w-10 h-10" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <defs>
+                <linearGradient id="goldChevronIdx" x1="14" y1="12" x2="20" y2="12" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="#f59e0b"/>
+                  <stop offset="1" stop-color="#fbbf24"/>
+                </linearGradient>
+              </defs>
+              <g transform="rotate(45 12 12)">
+                <!-- Right chevron (gold) -->
+                <path d="M14 6 L20 12 L14 18 L14 15 L17 12 L14 9 Z" fill="url(#goldChevronIdx)"/>
+                <!-- Three bars (square) -->
+                <rect x="4.8" y="14" width="5.8" height="2" rx="0" fill="#22c55e"/>
+                <rect x="5.8" y="11" width="4.8" height="2" rx="0" fill="#ef4444"/>
+                <rect x="6.8" y="8" width="3.8" height="2" rx="0" fill="#22c55e"/>
+                <!-- Horizontal wicks with square ends (thin) -->
+                <line x1="4.2" y1="15" x2="4.8" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="10.6" y1="15" x2="11.2" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="5.2" y1="12" x2="5.8" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="10.6" y1="12" x2="11.2" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="6.2" y1="9" x2="6.8" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+                <line x1="10.6" y1="9" x2="11.2" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+              </g>
+            </svg>
+            <span class="font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">TOPC</span>
+            <span class="ml-1 font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-amber-500">10</span>
+            <span class="ml-1 text-[10px] uppercase tracking-wide text-slate-400">Years</span>
+          </a>
+
+          <!-- Primary Nav (desktop) -->
+          <nav class="nav-desktop items-center gap-8 text-sm font-semibold text-slate-300">
+            <a href="#" class="hover:text-white flex items-center gap-1">How it works <i class="fa-solid fa-chevron-down text-[10px] opacity-70"></i></a>
+            <a href="#" class="hover:text-white">FAQ</a>
+            <a href="#" class="hover:text-white">Testimonials</a>
+            <a href="#" class="hover:text-white flex items-center gap-1">Trading <i class="fa-solid fa-chevron-down text-[10px] opacity-70"></i></a>
+            <a href="#" class="hover:text-white flex items-center gap-1">About us <i class="fa-solid fa-chevron-down text-[10px] opacity-70"></i></a>
+            <a href="#" class="hover:text-white">Academy</a>
+          </nav>
+
+          <!-- Right Side -->
+          <div class="ml-auto flex items-center gap-4">
+            <!-- Client Area link hidden on Dashboard page -->
+            <a href="#" class="hidden">Client Area</a>
+            <span class="hidden sm:block font-semibold text-slate-200">Ionut Emilian</span>
+            <div class="w-8 h-8 rounded-full bg-blue-200 text-blue-800 flex items-center justify-center text-sm font-bold">IE</div>
+            <button id="navTrigger" class="nav-trigger hidden p-2 -mr-2 text-slate-300 hover:text-white" aria-label="Open menu">
+              <i class="fas fa-bars"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Off-canvas drawer (right) -->
+    <div id="drawerOverlay" class="fixed inset-0 bg-black/50 z-50 hidden"></div>
+    <aside id="drawerPanel" class="fixed top-0 right-0 h-full w-80 sm:w-96 bg-slate-800 border-l border-slate-700 z-50 transform translate-x-full transition-transform duration-300">
+      <div class="h-14 flex items-center justify-between px-4 border-b border-slate-700/80">
+        <button class="text-slate-300 hover:text-white"><i class="fas fa-magnifying-glass"></i></button>
+        <button id="drawerCloseBtn" class="text-slate-300 hover:text-white text-xl" aria-label="Close menu"><i class="fas fa-xmark"></i></button>
+      </div>
+      <nav class="px-4 py-3 flex flex-col gap-4 text-base font-semibold text-slate-200">
+        <a href="#" class="flex items-center justify-between py-1">How it works <i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
+        <a href="#" class="py-1">FAQ</a>
+        <a href="#" class="py-1">Testimonials</a>
+        <a href="#" class="flex items-center justify-between py-1">Trading <i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
+        <a href="#" class="flex items-center justify-between py-1">About us <i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
+        <a href="#" class="py-1">Academy</a>
+        <div class="py-2 border-t border-slate-700/80"></div>
+        <a href="#" class="flex items-center justify-between py-1"><span class="flex items-center gap-2"><span class="text-xl">🇬🇧</span> EN</span><i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
+        <div class="pt-2">
+          <a href="#" class="inline-flex w-full items-center justify-center rounded-md bg-blue-600 hover:bg-blue-700 text-white font-bold h-11">Client Area</a>
+        </div>
+      </nav>
+    </aside>
+
+    <div class="container mx-auto p-4 md:p-6 lg:p-8">
+      <header class="text-center mb-8">
+        <h1 class="text-4xl font-extrabold text-white tracking-tight">
+          Trading Outcome
+          <span class="text-blue-500">Probability Calculator</span>
+        </h1>
+        <p class="mt-2 text-lg text-slate-400">
+          Analyze your strategy, simulate outcomes, and understand your edge.
+        </p>
+      </header>
+
+      <main class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <div class="lg:col-span-2 flex flex-col gap-6">
+          <!-- Trade Journal and Risk Calculators (Column 1) -->
+          <section
+            class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-6 h-fit"
+          >
+            <h2
+              class="text-2xl font-bold text-white mb-4 flex items-center gap-3"
+            >
+              <i class="fas fa-book-open text-blue-500"></i>Trade Journal
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div class="md:col-span-2">
+                <label
+                  for="initialBalance"
+                  class="block text-sm font-medium text-slate-400 mb-1"
+                  >Initial Balance (£)</label
+                >
+                <div class="relative">
+                  <span
+                    class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"
+                    >£</span
+                  ><input
+                    type="number"
+                    id="initialBalance"
+                    step="0.01"
+                    value="1000.00"
+                    class="form-input w-full pl-7 p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                  />
+                </div>
+              </div>
+              <div>
+                <label
+                  for="tradeDate"
+                  class="block text-sm font-medium text-slate-400 mb-1"
+                  >Date & Time</label
+                ><input
+                  type="datetime-local"
+                  id="tradeDate"
+                  class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="tradeAsset"
+                  class="block text-sm font-medium text-slate-400 mb-1"
+                  >Asset</label
+                ><input
+                  type="text"
+                  id="tradeAsset"
+                  placeholder="e.g., US100"
+                  class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="tradePnL"
+                  class="block text-sm font-medium text-slate-400 mb-1"
+                  >P&L (£)</label
+                ><input
+                  type="number"
+                  id="tradePnL"
+                  step="0.01"
+                  placeholder="e.g., 16.11"
+                  class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="tradeRiskAmount"
+                  class="block text-sm font-medium text-slate-400 mb-1"
+                  >Risk (1R) Amount (£)<span class="tooltip-container"
+                    ><i class="fas fa-info-circle text-slate-500 ml-1"></i
+                    ><span class="tooltip-text"
+                      >The max amount you were willing to lose on this trade
+                      (your 1R). This is crucial for R-multiple
+                      calculations.</span
+                    ></span
+                  ></label
+                ><input
+                  type="number"
+                  id="tradeRiskAmount"
+                  step="0.01"
+                  placeholder="e.g., 5.00"
+                  class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                  required
+                />
+              </div>
+              <div class="md:col-span-2">
+                <label
+                  for="tradeOutcome"
+                  class="block text-sm font-medium text-slate-400 mb-1"
+                  >Outcome</label
+                ><select
+                  id="tradeOutcome"
+                  class="form-select w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                  required
+                >
+                  <option value="Win">Win</option>
+                  <option value="Loss">Loss</option>
+                </select>
+              </div>
+
+              <div class="md:col-span-2">
+                <label
+                  for="tradeTags"
+                  class="block text-sm font-medium text-slate-400 mb-1"
+                  >Tags (comma-separated)</label
+                >
+                <input
+                  type="text"
+                  id="tradeTags"
+                  placeholder="e.g., Breakout, FOMO, NY Session"
+                  class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                />
+              </div>
+
+              <div class="md:col-span-2 grid grid-cols-2 gap-4">
+                <button
+                  id="addTradeBtn"
+                  class="w-full mt-2 px-4 py-3 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition duration-200 shadow-md hover:shadow-lg"
+                >
+                  <i class="fas fa-plus mr-2"></i>Add Trade
+                </button>
+                <input
+                  type="file"
+                  id="csvFileInput"
+                  class="hidden"
+                  accept=".csv"
+                />
+                <button
+                  id="importCsvBtn"
+                  class="w-full mt-2 px-4 py-3 bg-teal-600 text-white rounded-lg font-bold hover:bg-teal-700 transition duration-200 shadow-md hover:shadow-lg tooltip-container"
+                >
+                  <i class="fas fa-file-csv mr-2"></i>Import from CSV
+                  <span
+                    class="tooltip-text"
+                    style="
+                      width: 280px;
+                      transform: translateX(40%);
+                      bottom: 110%;
+                    "
+                  >
+                    Required columns: Date, Asset, P&L, Risk(1R), Tags
+                    (optional).
+                    <br /><strong>Date format: DD/MM/YYYY HH:mm</strong>
+                    <br />Tags should be semicolon-separated (e.g., tag1;tag2).
+                  </span>
+                </button>
+              </div>
+            </div>
+            <h2
+              class="text-2xl font-bold text-white mb-4 flex items-center gap-3"
+            >
+              <i class="fas fa-list-ul text-blue-500"></i>Trade History
+            </h2>
+            <div
+              class="max-h-96 overflow-y-auto rounded-lg border border-slate-700"
+            >
+              <table class="min-w-full divide-y divide-slate-700">
+                <thead class="bg-slate-700/50 sticky top-0 z-10">
+                  <tr
+                    class="text-left text-xs font-medium text-slate-400 uppercase tracking-wider"
+                  >
+                    <th scope="col" class="px-4 py-3">Date & Tags</th>
+                    <th scope="col" class="px-4 py-3">Asset</th>
+                    <th scope="col" class="px-4 py-3">P&L</th>
+                    <th scope="col" class="px-4 py-3">R-Multiple</th>
+                    <th scope="col" class="px-4 py-3 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="tradeList"
+                  class="bg-slate-800 divide-y divide-slate-700"
+                ></tbody>
+              </table>
+            </div>
+            <div class="flex justify-end mt-4">
+              <button
+                id="clearAllTradesBtn"
+                class="px-4 py-2 bg-red-600/20 text-red-400 border border-red-500/30 rounded-lg font-semibold hover:bg-red-600/40 hover:text-red-300 transition duration-200 text-sm"
+              >
+                <i class="fas fa-trash-alt mr-2"></i>Clear All
+              </button>
+            </div>
+          </section>
+
+          <section
+            class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-6 h-fit"
+          >
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+                <i class="fas fa-calculator text-orange-400"></i>Risk
+                Calculators
+              </h2>
+              <button
+                id="clearCalculatorsBtn"
+                class="text-xs text-blue-400 hover:text-blue-300 font-semibold"
+              >
+                Clear Inputs
+              </button>
+            </div>
+
+            <div class="space-y-6">
+              <div>
+                <h3 class="text-lg font-semibold text-white mb-3">
+                  Position Size
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      for="pscAccountBalance"
+                      class="block text-sm font-medium text-slate-400 mb-1"
+                      >Account Balance (£)</label
+                    >
+                    <div class="relative">
+                      <span
+                        class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"
+                        >£</span
+                      >
+                      <input
+                        type="number"
+                        id="pscAccountBalance"
+                        step="0.01"
+                        class="form-input w-full pl-7 p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                      />
+                      <button
+                        id="pscUseCurrentBalance"
+                        class="absolute inset-y-0 right-0 flex items-center pr-3 text-blue-400 hover:text-blue-300 text-xs font-semibold"
+                      >
+                        USE CURRENT
+                      </button>
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                      for="pscRiskPercent"
+                      class="block text-sm font-medium text-slate-400 mb-1"
+                      >Risk Percentage (%)</label
+                    >
+                    <div class="relative">
+                      <input
+                        type="number"
+                        id="pscRiskPercent"
+                        value="1.0"
+                        step="0.1"
+                        class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                      />
+                      <span
+                        class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-500"
+                        >%</span
+                      >
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                      for="pscStopLossPips"
+                      class="block text-sm font-medium text-slate-400 mb-1"
+                      >Stop Loss (Points/Pips)</label
+                    >
+                    <input
+                      type="number"
+                      id="pscStopLossPips"
+                      step="0.1"
+                      class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      for="pscValuePerPip"
+                      class="block text-sm font-medium text-slate-400 mb-1"
+                      >Value per Point/Pip (£)</label
+                    >
+                    <div class="relative">
+                      <span
+                        class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"
+                        >£</span
+                      >
+                      <input
+                        type="number"
+                        id="pscValuePerPip"
+                        step="0.01"
+                        class="form-input w-full pl-7 p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mt-4 pt-4 border-t border-slate-700 grid grid-cols-2 gap-4"
+                >
+                  <div class="p-3 bg-slate-900/50 rounded-lg">
+                    <p class="font-medium text-slate-400 text-xs">
+                      Amount to Risk
+                    </p>
+                    <p
+                      id="pscResultAmount"
+                      class="font-bold text-lg text-red-400"
+                    >
+                      £0.00
+                    </p>
+                  </div>
+                  <div class="p-3 bg-slate-900/50 rounded-lg">
+                    <p class="font-medium text-slate-400 text-xs">
+                      Position Size
+                    </p>
+                    <p
+                      id="pscResultSize"
+                      class="font-bold text-lg text-orange-400"
+                    >
+                      0.00
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-6 border-t border-slate-700">
+                <h3 class="text-lg font-semibold text-white mb-3">
+                  Risk of Ruin
+                </h3>
+                <div
+                  class="text-xs text-slate-400 mb-3 border-b border-slate-700/50 pb-3"
+                >
+                  <p>Using your journal's filtered stats:</p>
+                  <div class="flex justify-between mt-1">
+                    <span
+                      >Win Rate:
+                      <strong id="rorSourceWinRate" class="text-slate-200"
+                        >0%</strong
+                      ></span
+                    >
+                    <span
+                      >Avg R-Expectancy:
+                      <strong id="rorSourceAvgR" class="text-slate-200"
+                        >0.00R</strong
+                      ></span
+                    >
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      for="rorDrawdown"
+                      class="block text-sm font-medium text-slate-400 mb-1"
+                      >Drawdown to Ruin (%)</label
+                    >
+                    <div class="relative">
+                      <input
+                        type="number"
+                        id="rorDrawdown"
+                        value="20"
+                        step="1"
+                        class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                      />
+                      <span
+                        class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-500"
+                        >%</span
+                      >
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                      for="rorRiskPerTrade"
+                      class="block text-sm font-medium text-slate-400 mb-1"
+                      >Future Risk per Trade (%)</label
+                    >
+                    <div class="relative">
+                      <input
+                        type="number"
+                        id="rorRiskPerTrade"
+                        value="1"
+                        step="0.1"
+                        class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                      />
+                      <span
+                        class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-500"
+                        >%</span
+                      >
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="mt-4 pt-4 border-t border-slate-700 grid grid-cols-2 gap-4"
+                >
+                  <div class="p-3 bg-slate-900/50 rounded-lg">
+                    <p class="font-medium text-slate-400 text-xs">
+                      Losing Trades to Ruin
+                    </p>
+                    <p
+                      id="rorResultTrades"
+                      class="font-bold text-lg text-orange-400"
+                    >
+                      0
+                    </p>
+                  </div>
+                  <div class="p-3 bg-slate-900/50 rounded-lg">
+                    <p class="font-medium text-slate-400 text-xs">
+                      Risk of Ruin
+                      <span class="tooltip-container"
+                        ><i class="fas fa-info-circle text-slate-500 ml-1"></i
+                        ><span class="tooltip-text" style="width: 280px">
+                          A forward-looking projection. It answers: "If I
+                          consistently risk this percentage on all future
+                          trades, what is the probability of hitting my drawdown
+                          limit, given my historical performance
+                          (R-Expectancy)?"
+                        </span></span
+                      >
+                    </p>
+                    <p
+                      id="rorResultPercent"
+                      class="font-bold text-lg text-red-400"
+                    >
+                      0.00%
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <div class="lg:col-span-3 flex flex-col gap-6">
+          <!-- Tabs and Main Content (Column 2) -->
+          <section
+            class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-6"
+          >
+            <div class="border-b border-slate-700 mb-4">
+              <nav class="flex space-x-1" id="tab-buttons">
+                <button
+                  data-tab="tab-dashboard"
+                  class="tab-button active px-4 py-2 text-sm font-medium rounded-t-lg transition-colors"
+                >
+                  Dashboard
+                </button>
+                <button
+                  data-tab="tab-stats"
+                  class="tab-button px-4 py-2 text-sm font-medium text-slate-400 hover:bg-slate-700/50 rounded-t-lg transition-colors"
+                >
+                  Full Statistics
+                </button>
+                <button
+                  data-tab="tab-sim"
+                  class="tab-button px-4 py-2 text-sm font-medium text-slate-400 hover:bg-slate-700/50 rounded-t-lg transition-colors"
+                >
+                  Simulation
+                </button>
+              </nav>
+            </div>
+            <div id="tab-content">
+              <div id="tab-dashboard" class="tab-panel active">
+                <div
+                  id="tagFilterContainer"
+                  class="mb-4 pb-4 border-b border-slate-700"
+                >
+                  <div class="flex justify-between items-center mb-2">
+                    <h4 class="text-sm font-semibold text-slate-400">
+                      Filter by Tag:
+                    </h4>
+                    <button
+                      id="clearTagFilterBtn"
+                      class="hidden text-xs text-blue-400 hover:text-blue-300 font-semibold"
+                    >
+                      Clear Filter
+                    </button>
+                  </div>
+                  <div id="tagPills" class="flex flex-wrap gap-2"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div
+                    class="md:col-span-2 grid grid-cols-2 sm:grid-cols-4 gap-4"
+                  >
+                    <div
+                      class="p-4 bg-slate-700/50 rounded-lg border border-slate-600 text-center"
+                    >
+                      <p class="font-medium text-slate-400 text-xs">Net P&L</p>
+                      <p
+                        id="db-statNetPnL"
+                        class="text-2xl font-bold text-white"
+                      >
+                        £0.00
+                      </p>
+                    </div>
+                    <div
+                      class="p-4 bg-slate-700/50 rounded-lg border border-slate-600 text-center"
+                    >
+                      <p class="font-medium text-slate-400 text-xs">
+                        Profit Factor
+                      </p>
+                      <p
+                        id="db-statProfitFactor"
+                        class="text-2xl font-bold text-white"
+                      >
+                        0.00
+                      </p>
+                    </div>
+                    <div
+                      class="p-4 bg-slate-700/50 rounded-lg border border-slate-600 text-center"
+                    >
+                      <p class="font-medium text-slate-400 text-xs">Win Rate</p>
+                      <p
+                        id="db-statWinRate"
+                        class="text-2xl font-bold text-white"
+                      >
+                        0%
+                      </p>
+                    </div>
+                    <div
+                      class="p-4 bg-slate-700/50 rounded-lg border border-slate-600 text-center"
+                    >
+                      <p class="font-medium text-slate-400 text-xs">
+                        R-Expectancy
+                      </p>
+                      <p
+                        id="db-statEvRPerTrade"
+                        class="text-2xl font-bold text-white"
+                      >
+                        0.00R
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="md:col-span-2 p-4 bg-slate-900/50 rounded-lg">
+                    <div
+                      class="flex justify-between items-center mb-1 text-xs font-semibold"
+                    >
+                      <span class="text-slate-400">Current Drawdown</span>
+                      <span id="db-drawdown-label" class="text-white"
+                        >£0 / £0</span
+                      >
+                    </div>
+                    <div class="w-full bg-slate-700 rounded-full h-2.5">
+                      <div
+                        id="db-drawdown-bar"
+                        class="bg-red-600 h-2.5 rounded-full"
+                        style="width: 0%"
+                      ></div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="md:col-span-2 chart-container relative h-80 w-full"
+                  >
+                    <canvas id="dashboardEquityChart"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div id="tab-stats" class="tab-panel">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                  <div
+                    class="p-4 bg-slate-700/50 rounded-lg border border-slate-600"
+                  >
+                    <div class="flex items-center justify-between">
+                      <p class="font-medium text-slate-400">Current Balance</p>
+                      <span class="tooltip-container"
+                        ><i
+                          class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                        ></i
+                        ><span class="tooltip-text"
+                          >Your initial balance adjusted by the cumulative P&L
+                          of all recorded trades.</span
+                        ></span
+                      >
+                    </div>
+                    <p
+                      id="statCurrentBalance"
+                      class="text-xl font-bold text-white"
+                    >
+                      £0.00
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 bg-slate-700/50 rounded-lg border border-slate-600"
+                  >
+                    <div class="flex items-center justify-between">
+                      <p class="font-medium text-slate-400">Net P&L</p>
+                      <span class="tooltip-container"
+                        ><i
+                          class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                        ></i
+                        ><span class="tooltip-text"
+                          >The sum of all individual trade profits and
+                          losses.</span
+                        ></span
+                      >
+                    </div>
+                    <p id="statNetPnL" class="text-xl font-bold text-white">
+                      £0.00
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 bg-slate-700/50 rounded-lg border border-slate-600"
+                  >
+                    <div class="flex items-center justify-between">
+                      <p class="font-medium text-slate-400">Total R</p>
+                      <span class="tooltip-container"
+                        ><i
+                          class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                        ></i
+                        ><span class="tooltip-text"
+                          >The sum of all R-multiples from your trades.</span
+                        ></span
+                      >
+                    </div>
+                    <p id="statTotalR" class="text-xl font-bold text-white">
+                      0.00R
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 bg-slate-700/50 rounded-lg border border-slate-600"
+                  >
+                    <div class="flex items-center justify-between">
+                      <p class="font-medium text-slate-400">Win Rate</p>
+                      <span class="tooltip-container"
+                        ><i
+                          class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                        ></i
+                        ><span class="tooltip-text" style="width: 280px">
+                          The percentage of your trades that are profitable.
+                          <hr class="border-slate-600 my-2" />
+                          This is the
+                          <strong>Maximum Likelihood Estimate (MLE)</strong> for
+                          your strategy's probability of success (p). It is the
+                          single best estimate for 'win probability' that makes
+                          your observed data the most likely.
+                        </span></span
+                      >
+                    </div>
+                    <p
+                      id="statWinRate"
+                      class="text-xl font-bold text-green-400"
+                    >
+                      0.00%
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 bg-slate-700/50 rounded-lg border border-slate-600"
+                  >
+                    <div class="flex items-center justify-between">
+                      <p class="font-medium text-slate-400">Risk-Reward</p>
+                      <span class="tooltip-container"
+                        ><i
+                          class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                        ></i
+                        ><span class="tooltip-text"
+                          >The ratio of your average R per win to your average R
+                          per loss.</span
+                        ></span
+                      >
+                    </div>
+                    <p
+                      id="statRiskRewardRatio"
+                      class="text-xl font-bold text-blue-400"
+                    >
+                      0.00:1
+                    </p>
+                  </div>
+                  <div
+                    class="p-4 bg-slate-700/50 rounded-lg border border-slate-600"
+                  >
+                    <div class="flex items-center justify-between">
+                      <p class="font-medium text-slate-400">Profit Factor</p>
+                      <span class="tooltip-container"
+                        ><i
+                          class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                        ></i
+                        ><span class="tooltip-text"
+                          >Total Gross Profit / Total Gross Loss.</span
+                        ></span
+                      >
+                    </div>
+                    <p
+                      id="statProfitFactor"
+                      class="text-xl font-bold text-blue-400"
+                    >
+                      0.00
+                    </p>
+                  </div>
+
+                  <details class="col-span-2 md:col-span-3 mt-2">
+                    <summary
+                      class="cursor-pointer text-slate-400 hover:text-white transition-colors"
+                    >
+                      Show All Metrics
+                    </summary>
+                    <div
+                      class="grid grid-cols-2 md:grid-cols-3 gap-4 mt-4 animate-fade-in border-t border-slate-700 pt-4"
+                    >
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">Total Trades</p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >The total number of trades recorded.</span
+                            ></span
+                          >
+                        </div>
+                        <p id="statTotalTrades" class="font-bold text-white">
+                          0
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Winning Trades
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >The count and percentage of profitable
+                              trades.</span
+                            ></span
+                          >
+                        </div>
+                        <p
+                          id="statWinningTrades"
+                          class="font-bold text-green-400"
+                        >
+                          0 (0.00%)
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Losing Trades
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >The count and percentage of losing trades.</span
+                            ></span
+                          >
+                        </div>
+                        <p id="statLosingTrades" class="font-bold text-red-400">
+                          0 (0.00%)
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">Avg. Win P&L</p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text" style="width: 280px">
+                              The average monetary profit of your winning
+                              trades.
+                              <hr class="border-slate-600 my-2" />
+                              This is the
+                              <strong>Maximum Likelihood Estimate (MLE)</strong>
+                              for the mean (μ) of your winning trade
+                              distribution.
+                            </span></span
+                          >
+                        </div>
+                        <p
+                          id="statAvgProfitPerWin"
+                          class="font-bold text-green-400"
+                        >
+                          £0.00
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Avg. Loss P&L
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text" style="width: 280px">
+                              The average monetary size of your losing trades.
+                              <hr class="border-slate-600 my-2" />
+                              This is the
+                              <strong>Maximum Likelihood Estimate (MLE)</strong>
+                              for the mean (μ) of your losing trade
+                              distribution.
+                            </span></span
+                          >
+                        </div>
+                        <p
+                          id="statAvgLossPerLoss"
+                          class="font-bold text-red-400"
+                        >
+                          £0.00
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Avg. R per Win
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >The average R-multiple gained from your winning
+                              trades.</span
+                            ></span
+                          >
+                        </div>
+                        <p id="statAvgRPerWin" class="font-bold text-green-400">
+                          0.00R
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Avg. R per Loss
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >The average R-multiple lost from your losing
+                              trades.</span
+                            ></span
+                          >
+                        </div>
+                        <p id="statAvgRPerLoss" class="font-bold text-red-400">
+                          0.00R
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            EV per Trade (£)
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >The long-term average profit or loss you can
+                              expect per trade.</span
+                            ></span
+                          >
+                        </div>
+                        <p id="statEvPerTrade" class="font-bold text-blue-400">
+                          £0.00
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            EV per Trade (R)
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text" style="width: 280px">
+                              Your Expected Value per trade in R-multiples.
+                              <hr class="border-slate-600 my-2" />
+                              This is the
+                              <strong>Maximum Likelihood Estimate (MLE)</strong>
+                              for the true mean of your strategy's R-multiple
+                              distribution.
+                            </span></span
+                          >
+                        </div>
+                        <p id="statEvRPerTrade" class="font-bold text-blue-400">
+                          0.00R
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Break-Even Win Rate
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >The minimum win rate your strategy needs to cover
+                              its losses.</span
+                            ></span
+                          >
+                        </div>
+                        <p
+                          id="statBreakEvenWinRate"
+                          class="font-bold text-blue-400"
+                        >
+                          0.00%
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Std. Dev. of P&L
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >Measures the volatility of your trade
+                              outcomes.</span
+                            ></span
+                          >
+                        </div>
+                        <p id="statStdDevPnL" class="font-bold text-blue-400">
+                          £0.00
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">Sharpe Ratio</p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >A measure of risk-adjusted return. Higher is
+                              better.</span
+                            ></span
+                          >
+                        </div>
+                        <p id="statSharpeRatio" class="font-bold text-blue-400">
+                          0.00
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Downside Dev. P&L
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >Focuses on 'bad' volatility.</span
+                            ></span
+                          >
+                        </div>
+                        <p
+                          id="statDownsideDeviationPnL"
+                          class="font-bold text-blue-400"
+                        >
+                          £0.00
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">Sortino Ratio</p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >Measures the return per unit of *downside*
+                              risk.</span
+                            ></span
+                          >
+                        </div>
+                        <p
+                          id="statSortinoRatio"
+                          class="font-bold text-blue-400"
+                        >
+                          0.00
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">Max Drawdown</p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >The largest peak-to-trough decline in your
+                              balance.</span
+                            ></span
+                          >
+                        </div>
+                        <p
+                          id="statHistoricalMaxDrawdown"
+                          class="font-bold text-red-400"
+                        >
+                          £0.00
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Max DD Duration
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text" style="width: 280px">
+                              The longest time (in days) your account spent
+                              "underwater", below a previous equity high.
+                            </span></span
+                          >
+                        </div>
+                        <p
+                          id="statMaxDrawdownDurationDays"
+                          class="font-bold text-orange-400"
+                        >
+                          0 days
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Recovery Factor
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text" style="width: 280px">
+                              Net Profit divided by Max Drawdown. Shows how well
+                              the system recovers from losses. Higher is better
+                              (&#x3e;2.0 is great).
+                            </span></span
+                          >
+                        </div>
+                        <p
+                          id="statRecoveryFactor"
+                          class="font-bold text-green-400"
+                        >
+                          0.00
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Longest Win Streak
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >The maximum number of consecutive winning
+                              trades.</span
+                            ></span
+                          >
+                        </div>
+                        <p
+                          id="statLongestWinStreak"
+                          class="font-bold text-green-400"
+                        >
+                          0
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Longest Loss Streak
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text"
+                              >The maximum number of consecutive losing
+                              trades.</span
+                            ></span
+                          >
+                        </div>
+                        <p
+                          id="statLongestLossStreak"
+                          class="font-bold text-red-400"
+                        >
+                          0
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            Z-Score (Streaks)
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text" style="width: 280px">
+                              Measures streak randomness. A score between -1.96
+                              and +1.96 suggests streaks are random. Outside
+                              this range may indicate non-random patterns (e.g.
+                              psychological issues).
+                            </span></span
+                          >
+                        </div>
+                        <p id="statZScore" class="font-bold text-blue-400">
+                          0.00
+                        </p>
+                      </div>
+                      <div class="p-3 bg-slate-900/50 rounded-lg md:col-span-2">
+                        <div class="flex items-center justify-between">
+                          <p class="font-medium text-slate-400">
+                            System Quality (SQN)
+                          </p>
+                          <span class="tooltip-container"
+                            ><i
+                              class="fas fa-info-circle text-slate-500 hover:text-slate-300"
+                            ></i
+                            ><span class="tooltip-text" style="width: 280px">
+                              Measures system quality by Van Tharp. &lt;1.6:
+                              Junk, 1.6-1.9: Average, 2.0-2.4: Good, 2.5-2.9:
+                              Excellent, >3.0: Holy Grail. Requires at least 30
+                              trades for significance.
+                            </span></span
+                          >
+                        </div>
+                        <p
+                          id="statSqn"
+                          class="font-bold text-xl text-purple-400"
+                        >
+                          0.00
+                          <span
+                            id="statSqnGrade"
+                            class="text-sm font-medium text-slate-400 ml-2"
+                          ></span>
+                        </p>
+                      </div>
+                    </div>
+                  </details>
+                </div>
+
+                <!-- START: Daily Outcome Prediction Section -->
+                <div class="mt-8 pt-6 border-t border-slate-700">
+                  <h3
+                    class="text-xl font-bold text-white mb-4 flex items-center gap-3"
+                  >
+                    <i class="fas fa-bullseye text-indigo-400"></i>Daily Outcome
+                    Prediction
+                  </h3>
+                  <p class="text-sm text-slate-400 mb-6">
+                    These charts show your historical Win Rate and Loss Rate for
+                    each day of the week. This acts as a prediction for your
+                    performance on any given day based on past data.
+                  </p>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div
+                      class="chart-container relative h-80 w-full p-4 bg-slate-900/50 rounded-lg"
+                    >
+                      <canvas id="dailyWinRateChart"></canvas>
+                    </div>
+                    <div
+                      class="chart-container relative h-80 w-full p-4 bg-slate-900/50 rounded-lg"
+                    >
+                      <canvas id="dailyLossRateChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <!-- END: Daily Outcome Prediction Section -->
+
+                <!-- START: Markov Analysis Section -->
+                <div class="mt-8 pt-6 border-t border-slate-700">
+                  <h3
+                    class="text-xl font-bold text-white mb-4 flex items-center gap-3"
+                  >
+                    <i class="fas fa-link text-purple-400"></i>Outcome
+                    Predictability (Markov Analysis)
+                  </h3>
+                  <p class="text-sm text-slate-400 mb-6">
+                    These charts show the probability of your next trade's
+                    outcome based on the result of your previous trade. This
+                    helps identify if you have winning or losing streaks.
+                  </p>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div
+                      class="chart-container relative h-64 w-full p-4 bg-slate-900/50 rounded-lg"
+                    >
+                      <canvas id="markovAfterWinChart"></canvas>
+                    </div>
+                    <div
+                      class="chart-container relative h-64 w-full p-4 bg-slate-900/50 rounded-lg"
+                    >
+                      <canvas id="markovAfterLossChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <!-- END: Markov Analysis Section -->
+
+                <!-- START: Day of Week Analysis Section -->
+                <div class="mt-8 pt-6 border-t border-slate-700">
+                  <h3
+                    class="text-xl font-bold text-white mb-4 flex items-center gap-3"
+                  >
+                    <i class="fas fa-calendar-day text-teal-400"></i>Performance
+                    by Day of the Week
+                  </h3>
+                  <p class="text-sm text-slate-400 mb-6">
+                    These charts show your total number of winning and losing
+                    trades for each day of the week, allowing you to easily
+                    compare trade frequency and outcomes.
+                  </p>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div
+                      class="chart-container relative h-72 w-full p-4 bg-slate-900/50 rounded-lg"
+                    >
+                      <canvas id="dayOfWeekWinsChart"></canvas>
+                    </div>
+                    <div
+                      class="chart-container relative h-72 w-full p-4 bg-slate-900/50 rounded-lg"
+                    >
+                      <canvas id="dayOfWeekLossesChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <!-- END: Day of Week Analysis Section -->
+
+                <!-- START: Advanced Sequential Analysis Section -->
+                <div class="mt-8 pt-6 border-t border-slate-700">
+                  <h3
+                    class="text-xl font-bold text-white mb-4 flex items-center gap-3"
+                  >
+                    <i class="fas fa-project-diagram text-blue-400"></i>Advanced
+                    Sequential Analysis
+                  </h3>
+                  <p class="text-sm text-slate-400 mb-6">
+                    These charts predict the most likely day for your next win
+                    or loss, based on the outcome of your last trade. It helps
+                    identify patterns like "after a loss, I tend to win on
+                    Wednesdays".
+                  </p>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div
+                      class="chart-container relative h-80 w-full p-4 bg-slate-900/50 rounded-lg"
+                    >
+                      <canvas id="nextWinPredictionChart"></canvas>
+                    </div>
+                    <div
+                      class="chart-container relative h-80 w-full p-4 bg-slate-900/50 rounded-lg"
+                    >
+                      <canvas id="nextLossPredictionChart"></canvas>
+                    </div>
+                  </div>
+                </div>
+                <!-- END: Advanced Sequential Analysis Section -->
+              </div>
+
+              <div id="tab-sim" class="tab-panel">
+                <section
+                  class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-6"
+                >
+                  <h2
+                    class="text-2xl font-bold text-white mb-4 flex items-center gap-3"
+                  >
+                    <i class="fas fa-sliders-h text-purple-400"></i>Simulation
+                    Settings
+                  </h2>
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <div class="flex items-center justify-between mb-1">
+                        <label
+                          for="numTradesPerSet"
+                          class="block text-sm font-medium text-slate-400"
+                        >
+                          Trades per Series
+                          <span class="tooltip-container">
+                            <i
+                              class="fas fa-info-circle text-slate-500 ml-1"
+                            ></i>
+                            <span class="tooltip-text"
+                              >This value defines the 'time frame' for the
+                              simulation and the VaR calculation. If set to 10,
+                              the VaR 5% shows the potential max loss over the
+                              next 10 trades.</span
+                            >
+                          </span>
+                        </label>
+                        <div
+                          class="flex items-center space-x-1"
+                          id="tradesPerSeriesModeSelector"
+                        >
+                          <button
+                            data-mode="auto"
+                            class="tail-mode-btn px-2 py-0.5 rounded-md transition-colors text-xs"
+                          >
+                            Auto
+                          </button>
+                          <button
+                            data-mode="manual"
+                            class="tail-mode-btn px-2 py-0.5 rounded-md transition-colors text-xs active"
+                          >
+                            Manual
+                          </button>
+                        </div>
+                      </div>
+                      <input
+                        type="number"
+                        id="numTradesPerSet"
+                        value="10"
+                        min="1"
+                        class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        for="numSimulationSets"
+                        class="block text-sm font-medium text-slate-400 mb-1"
+                        >Number of Simulations</label
+                      >
+                      <input
+                        type="number"
+                        id="numSimulationSets"
+                        value="1000"
+                        min="1"
+                        class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                      />
+                    </div>
+                  </div>
+                  <div class="mt-4 pt-4 border-t border-slate-700">
+                    <div class="flex items-center justify-between mb-4">
+                      <h3 class="text-lg font-semibold text-white">
+                        "Fat-Tail" Event Definition
+                      </h3>
+                      <div
+                        class="flex items-center space-x-2 text-sm font-medium"
+                        id="tailModeSelector"
+                      >
+                        <button
+                          data-mode="auto"
+                          class="tail-mode-btn px-3 py-1 rounded-md transition-colors active"
+                        >
+                          Auto
+                        </button>
+                        <button
+                          data-mode="manual"
+                          class="tail-mode-btn px-3 py-1 rounded-md transition-colors"
+                        >
+                          Manual
+                        </button>
+                      </div>
+                    </div>
+                    <div id="autoTailSettings" class="space-y-3">
+                      <p class="text-xs text-slate-400 italic">
+                        Calculated automatically from trades where R-multiple is
+                        outside the defined range.
+                      </p>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <label
+                            for="tailLossThreshold"
+                            class="block text-sm font-medium text-slate-400 mb-1"
+                            >Loss R-Multiple
+                          </label>
+                          <input
+                            type="number"
+                            id="tailLossThreshold"
+                            value="-3"
+                            step="0.1"
+                            class="form-input w-full p-2 bg-slate-900 border border-slate-600 rounded-md text-white"
+                          />
+                        </div>
+                        <div>
+                          <label
+                            for="tailWinThreshold"
+                            class="block text-sm font-medium text-slate-400 mb-1"
+                            >Win R-Multiple ></label
+                          >
+                          <input
+                            type="number"
+                            id="tailWinThreshold"
+                            value="5"
+                            step="0.1"
+                            class="form-input w-full p-2 bg-slate-900 border border-slate-600 rounded-md text-white"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      id="manualTailSettings"
+                      class="hidden grid-cols-1 md:grid-cols-2 gap-4"
+                    >
+                      <div>
+                        <label
+                          for="jumpProbability"
+                          class="block text-sm font-medium text-slate-400 mb-1"
+                          >"Fat-tail" Probability (%)</label
+                        ><input
+                          type="number"
+                          id="jumpProbability"
+                          value="0"
+                          min="0"
+                          max="100"
+                          step="0.1"
+                          class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                          disabled
+                        />
+                      </div>
+                      <div>
+                        <label
+                          for="avgJumpPnL"
+                          class="block text-sm font-medium text-slate-400 mb-1"
+                          >Avg. "Fat-tail" P&L (£)</label
+                        ><input
+                          type="number"
+                          id="avgJumpPnL"
+                          value="0"
+                          step="0.01"
+                          class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <button
+                    id="runSimulationBtn"
+                    class="w-full mt-6 px-6 py-3 bg-purple-600 text-white rounded-lg font-bold hover:bg-purple-700 transition duration-200 shadow-md hover:shadow-lg flex items-center justify-center"
+                  >
+                    <i id="simIcon" class="fas fa-play-circle mr-2"></i
+                    ><span id="simButtonText"
+                      >Recalculate & Run Simulation</span
+                    >
+                  </button>
+                </section>
+
+                <section
+                  class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-6 mt-6"
+                >
+                  <div id="tab-equity">
+                    <h3 class="text-xl font-bold text-white mb-4">
+                      Simulated Equity Paths (10-90th Percentile)
+                    </h3>
+                    <p class="text-slate-400 mb-4 text-sm">
+                      Based on
+                      <span id="simulatedSets" class="font-bold text-teal-400"
+                        >0</span
+                      >
+                      sets of
+                      <span id="simulatedN" class="font-bold text-teal-400"
+                        >0</span
+                      >
+                      trades. The solid line is the median (50th percentile)
+                      outcome.
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <p class="font-medium text-slate-400 text-xs">
+                          Simulated Avg. P&L
+                        </p>
+                        <p id="simAvgPnL" class="font-bold text-lg text-white">
+                          £0.00
+                        </p>
+                      </div>
+
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <div class="flex items-center justify-between mb-1">
+                          <p class="font-medium text-slate-400 text-xs">
+                            VaR 5% (Max Loss)
+                          </p>
+                          <div
+                            class="flex items-center space-x-1"
+                            id="varModeSelector"
+                          >
+                            <button
+                              data-mode="auto"
+                              class="var-mode-btn px-2 py-0.5 rounded-md transition-colors text-xs active"
+                            >
+                              Auto
+                            </button>
+                            <button
+                              data-mode="limit"
+                              class="var-mode-btn px-2 py-0.5 rounded-md transition-colors text-xs"
+                            >
+                              Set Limit
+                            </button>
+                          </div>
+                        </div>
+                        <div id="autoVaRContainer">
+                          <p id="simVaR" class="font-bold text-lg text-red-400">
+                            £0.00
+                          </p>
+                          <p class="text-xs text-slate-500 mt-1 h-4">
+                            5th percentile simulated loss
+                          </p>
+                        </div>
+                        <div id="manualVaRContainer" class="relative hidden">
+                          <div class="relative">
+                            <input
+                              type="number"
+                              id="manualVaRInput"
+                              placeholder="-100.00"
+                              step="0.01"
+                              class="form-input w-full p-1 bg-slate-700 border border-slate-600 rounded-md text-white text-lg font-bold text-orange-400"
+                            />
+                          </div>
+                          <p
+                            id="varBreachInfo"
+                            class="text-xs text-slate-500 mt-1 h-4"
+                          ></p>
+                        </div>
+                      </div>
+
+                      <div class="p-3 bg-slate-900/50 rounded-lg">
+                        <p class="font-medium text-slate-400 text-xs">
+                          Sim Max Drawdown
+                        </p>
+                        <p
+                          id="simMaxDrawdown"
+                          class="font-bold text-lg text-red-400"
+                        >
+                          £0.00
+                        </p>
+                      </div>
+                    </div>
+                    <div class="chart-container relative h-80 w-full mb-6">
+                      <canvas id="jumpDiffusionPnLChart"></canvas>
+                    </div>
+                    <div class="chart-container relative h-80 w-full">
+                      <canvas id="equityCurveChart"></canvas>
+                    </div>
+                  </div>
+                </section>
+
+                <!-- AI COACH SECTION -->
+                <section
+                  class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-6 mt-6"
+                >
+                  <h2
+                    class="text-2xl font-bold text-white mb-4 flex items-center gap-3"
+                  >
+                    <i class="fas fa-microchip text-teal-400"></i>AI Trading
+                    Coach
+                  </h2>
+                  <div id="aiInitialState">
+                    <p class="text-sm text-slate-400 mb-4">
+                      Get personalized feedback on your trading performance.
+                      Provide your Google AI (Gemini) API key to begin.
+                    </p>
+                    <div class="mb-4">
+                      <label
+                        for="googleAiKey"
+                        class="block text-sm font-medium text-slate-400 mb-1"
+                        >Google AI API Key</label
+                      >
+                      <input
+                        type="password"
+                        id="googleAiKey"
+                        placeholder="Enter your API key"
+                        class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                      />
+                    </div>
+                    <p
+                      id="aiInitialError"
+                      class="text-red-400 text-sm mb-4 hidden"
+                    ></p>
+                    <button
+                      id="startAiChatBtn"
+                      class="w-full mt-2 px-6 py-3 bg-teal-600 text-white rounded-lg font-bold hover:bg-teal-700 transition duration-200 shadow-md hover:shadow-lg flex items-center justify-center"
+                    >
+                      <i id="aiIcon" class="fas fa-play-circle mr-2"></i>
+                      <span id="aiButtonText">Start AI Analysis</span>
+                    </button>
+                  </div>
+                  <div
+                    id="aiChatLog"
+                    class="max-h-96 overflow-y-auto mb-4 prose prose-invert prose-sm max-w-none"
+                  ></div>
+                  <form id="aiChatForm" class="hidden">
+                    <div class="flex gap-2">
+                      <input
+                        type="text"
+                        id="aiChatInput"
+                        placeholder="Ask a follow-up question..."
+                        class="form-input flex-grow p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                      />
+                      <button
+                        id="aiChatSendBtn"
+                        type="submit"
+                        class="px-4 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition duration-200"
+                      >
+                        <i class="fas fa-paper-plane"></i>
+                      </button>
+                    </div>
+                  </form>
+                </section>
+                <!-- END OF AI COACH SECTION -->
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div
+      id="messageBox"
+      class="hidden fixed bottom-5 right-5 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 text-base transition-all duration-300 transform translate-x-full opacity-0"
+    ></div>
+    <div id="confirmModal" class="modal-overlay">
+      <div class="modal-content">
+        <p
+          id="confirmMessage"
+          class="text-xl font-semibold text-white mb-6"
+        ></p>
+        <div class="flex justify-center space-x-4">
+          <button
+            id="confirmYes"
+            class="px-6 py-2 bg-red-600 text-white rounded-lg font-bold hover:bg-red-700"
+          >
+            Yes</button
+          ><button
+            id="confirmNo"
+            class="px-6 py-2 bg-slate-600 text-slate-200 rounded-lg font-bold hover:bg-slate-700"
+          >
+            No
+          </button>
+        </div>
+      </div>
+    </div>
+    <div id="editModal" class="modal-overlay">
+      <div class="modal-content">
+        <h3 class="text-xl font-bold text-white mb-6">Edit Trade</h3>
+        <input type="hidden" id="editTradeId" />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+          <div class="md:col-span-2">
+            <label
+              for="editTradeDate"
+              class="block text-sm font-medium text-slate-400 mb-1"
+              >Date & Time</label
+            ><input
+              type="datetime-local"
+              id="editTradeDate"
+              class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+              required
+            />
+          </div>
+          <div class="md:col-span-2">
+            <label
+              for="editTradeAsset"
+              class="block text-sm font-medium text-slate-400 mb-1"
+              >Asset</label
+            ><input
+              type="text"
+              id="editTradeAsset"
+              class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+              required
+            />
+          </div>
+          <div>
+            <label
+              for="editTradePnL"
+              class="block text-sm font-medium text-slate-400 mb-1"
+              >P&L (£)</label
+            ><input
+              type="number"
+              id="editTradePnL"
+              step="0.01"
+              class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+              required
+            />
+          </div>
+          <div>
+            <label
+              for="editTradeRiskAmount"
+              class="block text-sm font-medium text-slate-400 mb-1"
+              >Risk (1R) (£)</label
+            ><input
+              type="number"
+              id="editTradeRiskAmount"
+              step="0.01"
+              class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+              required
+            />
+          </div>
+          <div class="md:col-span-2">
+            <label
+              for="editTradeOutcome"
+              class="block text-sm font-medium text-slate-400 mb-1"
+              >Outcome</label
+            ><select
+              id="editTradeOutcome"
+              class="form-select w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+              required
+            >
+              <option value="Win">Win</option>
+              <option value="Loss">Loss</option>
+            </select>
+          </div>
+
+          <div class="md:col-span-2">
+            <label
+              for="editTradeTags"
+              class="block text-sm font-medium text-slate-400 mb-1"
+              >Tags (comma-separated)</label
+            >
+            <input
+              type="text"
+              id="editTradeTags"
+              class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+            />
+          </div>
+        </div>
+        <div class="flex justify-end space-x-4 mt-6">
+          <button
+            id="editCancel"
+            class="px-6 py-2 bg-slate-600 text-slate-200 rounded-lg font-bold hover:bg-slate-700"
+          >
+            Cancel
+          </button>
+          <button
+            id="editSave"
+            class="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700"
+          >
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="./js/dashboard.js" defer></script>
+    
+  </body>
+</html>
