@@ -8,36 +8,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link rel="stylesheet" href="css/login.css" />
   </head>
   <body class="bg-slate-900 text-slate-300" style="font-family: 'Inter', sans-serif;">
-  <div class="min-h-screen flex items-center justify-center relative" style="z-index:1;">
-    <div class="trading-bg-anim" aria-hidden="true"></div>
-    <div class="login-card">
-      <a href="index.html" class="home-link" style="position:absolute;top:1.1rem;left:1.1rem;display:flex;align-items:center;gap:0.4rem;text-decoration:none;z-index:2;">
-        <svg class="w-8 h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <linearGradient id="goldChevronLogin" x1="14" y1="12" x2="20" y2="12" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stop-color="#f59e0b"/>
-              <stop offset="1" stop-color="#fbbf24"/>
-            </linearGradient>
-          </defs>
-          <g transform="rotate(45 12 12)">
-            <path d="M14 6 L20 12 L14 18 L14 15 L17 12 L14 9 Z" fill="url(#goldChevronLogin)"/>
-            <rect x="4.8" y="14" width="5.8" height="2" rx="0" fill="#22c55e"/>
-            <rect x="5.8" y="11" width="4.8" height="2" rx="0" fill="#ef4444"/>
-            <rect x="6.8" y="8" width="3.8" height="2" rx="0" fill="#22c55e"/>
-            <line x1="4.2" y1="15" x2="4.8" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
-            <line x1="10.6" y1="15" x2="11.2" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
-            <line x1="5.2" y1="12" x2="10.8" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
-            <line x1="10.6" y1="12" x2="15.2" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
-            <line x1="6.2" y1="9" x2="6.8" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
-            <line x1="10.6" y1="9" x2="11.2" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
-          </g>
-        </svg>
-  <span style="font-weight:800;font-size:1.1rem;background:linear-gradient(90deg,#fbbf24,#f59e0b);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;">TOPC</span>
-      </a>
+  <div class="trading-bg-anim" aria-hidden="true"></div>
+  <div class="scene">
+    <div class="card-container">
+      <div class="login-card card-face">
+        <a href="index.html" class="home-link" style="position:absolute;top:1.1rem;left:1.1rem;display:flex;align-items:center;gap:0.4rem;text-decoration:none;z-index:2;">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="goldChevronLogin" x1="14" y1="12" x2="20" y2="12" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#f59e0b"/>
+                <stop offset="1" stop-color="#fbbf24"/>
+              </linearGradient>
+            </defs>
+            <g transform="rotate(45 12 12)">
+              <path d="M14 6 L20 12 L14 18 L14 15 L17 12 L14 9 Z" fill="url(#goldChevronLogin)"/>
+              <rect x="4.8" y="14" width="5.8" height="2" rx="0" fill="#22c55e"/>
+              <rect x="5.8" y="11" width="4.8" height="2" rx="0" fill="#ef4444"/>
+              <rect x="6.8" y="8" width="3.8" height="2" rx="0" fill="#22c55e"/>
+              <line x1="4.2" y1="15" x2="4.8" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="10.6" y1="15" x2="11.2" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="5.2" y1="12" x2="10.8" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="10.6" y1="12" x2="15.2" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="6.2" y1="9" x2="6.8" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="10.6" y1="9" x2="11.2" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+            </g>
+          </svg>
+          <span style="font-weight:800;font-size:1.1rem;background:linear-gradient(90deg,#fbbf24,#f59e0b);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;">TOPC</span>
+        </a>
         <div class="login-header">
           <span class="logo-circle"><i class="fa-solid fa-user-lock"></i></span>
           <h1>Sign in to TOPC</h1>
@@ -54,16 +59,119 @@
           </div>
           <div class="form-options">
             <label class="remember"><input type="checkbox" id="remember" /> Remember me</label>
-            <a href="#" class="forgot">Forgot password?</a>
+            <a href="#" class="forgot-password-link">Forgot password?</a>
           </div>
           <button type="submit" class="login-btn">Sign In</button>
         </form>
-        <div class="login-footer">
+        <div class="my-4 flex items-center w-full">
+          <div class="flex-grow border-t border-slate-600"></div>
+          <span class="mx-4 text-slate-400 text-sm">OR</span>
+          <div class="flex-grow border-t border-slate-600"></div>
+        </div>
+        <div id="googleSignInBtn"></div>
+        <div class="login-footer mt-4">
           <span>Don't have an account?</span> <a href="#" class="signup-link">Sign up</a>
         </div>
         <div id="loginMessage" class="login-message"></div>
       </div>
+      <div class="signup-card card-face card-back">
+        <a href="index.html" class="home-link" style="position:absolute;top:1.1rem;left:1.1rem;display:flex;align-items:center;gap:0.4rem;text-decoration:none;z-index:2;">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="goldChevronSignup" x1="14" y1="12" x2="20" y2="12" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#f59e0b"/>
+                <stop offset="1" stop-color="#fbbf24"/>
+              </linearGradient>
+            </defs>
+            <g transform="rotate(45 12 12)">
+              <path d="M14 6 L20 12 L14 18 L14 15 L17 12 L14 9 Z" fill="url(#goldChevronSignup)"/>
+              <rect x="4.8" y="14" width="5.8" height="2" rx="0" fill="#22c55e"/>
+              <rect x="5.8" y="11" width="4.8" height="2" rx="0" fill="#ef4444"/>
+              <rect x="6.8" y="8" width="3.8" height="2" rx="0" fill="#22c55e"/>
+              <line x1="4.2" y1="15" x2="4.8" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="10.6" y1="15" x2="11.2" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="5.2" y1="12" x2="10.8" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="10.6" y1="12" x2="15.2" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="6.2" y1="9" x2="6.8" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="10.6" y1="9" x2="11.2" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+            </g>
+          </svg>
+          <span style="font-weight:800;font-size:1.1rem;background:linear-gradient(90deg,#fbbf24,#f59e0b);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;">TOPC</span>
+        </a>
+        <div class="login-header">
+          <span class="logo-circle"><i class="fa-solid fa-user-plus"></i></span>
+          <h1>Create Account</h1>
+          <p class="subtitle">Join TOPC and start trading smarter</p>
+        </div>
+        <form id="signupForm" class="login-form" autocomplete="off">
+          <div class="form-group">
+            <label for="signup-email">Email</label>
+            <input type="email" id="signup-email" name="email" required placeholder="you@email.com" />
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input type="password" id="signup-password" name="password" required placeholder="Create a password" />
+            <p id="pwRules" class="mt-1 text-xs text-slate-400 leading-snug">
+              Min 8 chars, must include: upper, lower, digit, symbol. Avoid common passwords.
+            </p>
+            <!-- <ul id="pwChecklist" class="mt-1 text-[11px] space-y-0.5 text-slate-500">
+              <li data-rule="len">• ≥ 8 characters</li>
+              <li data-rule="lower">• Lowercase letter</li>
+              <li data-rule="upper">• Uppercase letter</li>
+              <li data-rule="digit">• Digit</li>
+              <li data-rule="symbol">• Symbol</li>
+            </ul> -->
+          </div>
+          <button type="submit" class="login-btn">Sign Up</button>
+        </form>
+        <div class="login-footer">
+          <span>Already have an account?</span> <a href="#" class="signin-link">Sign in</a>
+        </div>
+        <div id="signupMessage" class="login-message"></div>
+      </div>
+      <div class="forgot-card card-face card-back">
+        <a href="index.html" class="home-link" style="position:absolute;top:1.1rem;left:1.1rem;display:flex;align-items:center;gap:0.4rem;text-decoration:none;z-index:2;">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+              <linearGradient id="goldChevronForgot" x1="14" y1="12" x2="20" y2="12" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#f59e0b"/>
+                <stop offset="1" stop-color="#fbbf24"/>
+              </linearGradient>
+            </defs>
+            <g transform="rotate(45 12 12)">
+              <path d="M14 6 L20 12 L14 18 L14 15 L17 12 L14 9 Z" fill="url(#goldChevronForgot)"/>
+              <rect x="4.8" y="14" width="5.8" height="2" rx="0" fill="#22c55e"/>
+              <rect x="5.8" y="11" width="4.8" height="2" rx="0" fill="#ef4444"/>
+              <rect x="6.8" y="8" width="3.8" height="2" rx="0" fill="#22c55e"/>
+              <line x1="4.2" y1="15" x2="4.8" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="10.6" y1="15" x2="11.2" y2="15" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="5.2" y1="12" x2="10.8" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="10.6" y1="12" x2="15.2" y2="12" stroke="#ef4444" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="6.2" y1="9" x2="6.8" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+              <line x1="10.6" y1="9" x2="11.2" y2="9" stroke="#22c55e" stroke-width="0.6" stroke-linecap="square"/>
+            </g>
+          </svg>
+          <span style="font-weight:800;font-size:1.1rem;background:linear-gradient(90deg,#fbbf24,#f59e0b);background-clip:text;-webkit-background-clip:text;-webkit-text-fill-color:transparent;">TOPC</span>
+        </a>
+        <div class="login-header">
+          <span class="logo-circle"><i class="fa-solid fa-key"></i></span>
+          <h1>Reset Password</h1>
+          <p class="subtitle">We'll send you a link to reset it</p>
+        </div>
+        <form id="forgotForm" class="login-form" autocomplete="off">
+          <div class="form-group">
+            <label for="forgot-email">Email</label>
+            <input type="email" id="forgot-email" name="email" required placeholder="you@email.com" />
+          </div>
+          <button type="submit" class="login-btn">Send Reset Link</button>
+        </form>
+        <div class="login-footer">
+          <span>Remembered your password?</span> <a href="#" class="signin-link">Sign in</a>
+        </div>
+        <div id="forgotMessage" class="login-message"></div>
+      </div>
     </div>
-    <script src="js/login.js"></script>
+  </div>
+  <script src="js/login.js"></script>
   </body>
 </html>

@@ -45,7 +45,7 @@
           <nav class="hidden xl:flex items-center gap-8 text-sm font-semibold text-slate-300">
             <a href="faq.html" class="hover:text-white">FAQ</a>
             <a href="testimonials.html" class="hover:text-white">Testimonials</a>
-            <a href="dashboard.html" class="hover:text-white">Trading</a>
+            <a href="index.html" class="hover:text-white">Trading</a>
             <a href="about.html" class="text-white">About us</a>
           </nav>
           <div class="ml-auto flex items-center gap-4">
@@ -68,10 +68,9 @@
       <nav class="px-4 py-3 flex flex-col gap-4 text-base font-semibold text-slate-200">
         <a href="faq.html" class="py-1">FAQ</a>
         <a href="testimonials.html" class="py-1">Testimonials</a>
-        <a href="dashboard.html" class="py-1">Trading</a>
+        <a href="index.html" class="py-1">Trading</a>
         <a href="about.html" class="py-1">About us</a>
         <div class="py-2 border-t border-slate-700/80"></div>
-        <a href="#" class="flex items-center justify-between py-1"><span class="flex items-center gap-2"><span class="text-xl">🇬🇧</span> EN</span><i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
         <div class="pt-2">
           <a href="dashboard.html" class="inline-flex w-full items-center justify-center rounded-md bg-blue-600 hover:bg-blue-700 text-white font-bold h-11">Client Area</a>
         </div>
@@ -88,17 +87,17 @@
 
       <!-- What we do -->
       <section class="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="p-5 rounded-xl border border-slate-700 bg-slate-800/40">
+        <div class="p-5 rounded-xl border border-slate-700 bg-slate-800">
           <div class="value-badge"><i class="fa-solid fa-book-open"></i> Trade Journal</div>
           <h3 class="mt-3 text-xl font-bold text-white">Structured Logging</h3>
           <p class="text-slate-400 text-sm mt-2">Record trades with 1R risk, outcome, P&L, and tags. Filter by tags to isolate setups and behaviors.</p>
         </div>
-        <div class="p-5 rounded-xl border border-slate-700 bg-slate-800/40">
+        <div class="p-5 rounded-xl border border-slate-700 bg-slate-800">
           <div class="value-badge"><i class="fa-solid fa-wave-square"></i> Risk Tools</div>
           <h3 class="mt-3 text-xl font-bold text-white">Position Size & Ruin</h3>
           <p class="text-slate-400 text-sm mt-2">Position sizing, Risk of Ruin, and VaR over the next N trades give forward-looking risk context.</p>
         </div>
-        <div class="p-5 rounded-xl border border-slate-700 bg-slate-800/40">
+        <div class="p-5 rounded-xl border border-slate-700 bg-slate-800">
           <div class="value-badge"><i class="fa-solid fa-chart-line"></i> Simulation</div>
           <h3 class="mt-3 text-xl font-bold text-white">Fat-tail Awareness</h3>
           <p class="text-slate-400 text-sm mt-2">Model typical versus outlier outcomes to avoid overconfidence. Visual equity paths and drawdowns.</p>
@@ -110,13 +109,13 @@
         <div class="kpi text-center"><p class="label">Users</p><p class="value">3M+</p></div>
         <div class="kpi text-center"><p class="label">Trustpilot</p><p class="value">4.8/5</p></div>
         <div class="kpi text-center"><p class="label">Countries</p><p class="value">140+</p></div>
-        <div class="kpi text-center"><p class="label">Rewards Paid</p><p class="value">$450M+</p></div>
+        <div class="kpi text-center p-4 rounded-xl border border-slate-700 bg-slate-800"><p class="label">Rewards Paid</p><p class="value">$450M+</p></div>
       </section>
 
       <!-- Contact Us -->
-      <section id="contact" class="mt-12">
-        <div class="md:flex md:items-start md:gap-8">
-          <div class="md:w-1/2">
+      <section id="contact" class="mt-12 p-6 rounded-xl border border-slate-700 bg-slate-800">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="md:col-span-1">
             <h2 class="text-2xl font-extrabold text-white">Contact Us</h2>
             <p class="text-slate-400 mt-2">Questions, feedback, or partnership ideas? Send us a message and we’ll get back to you.</p>
             <ul class="mt-4 space-y-2 text-sm text-slate-300">
@@ -124,20 +123,20 @@
               <li><i class="fa-solid fa-globe text-blue-400 mr-2"></i>www.example.com</li>
             </ul>
           </div>
-          <div class="md:w-1/2 mt-6 md:mt-0 form-card p-5">
+          <div class="md:col-span-2">
             <form id="contactForm" novalidate>
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label class="block text-sm font-medium text-slate-400 mb-1" for="name">Name</label>
-                  <input id="name" name="name" type="text" required />
+                  <input id="name" name="name" type="text" required class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white" />
                 </div>
                 <div>
                   <label class="block text-sm font-medium text-slate-400 mb-1" for="email">Email</label>
-                  <input id="email" name="email" type="email" required />
+                  <input id="email" name="email" type="email" required class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white" />
                 </div>
                 <div class="sm:col-span-2">
                   <label class="block text-sm font-medium text-slate-400 mb-1" for="topic">Subject</label>
-                  <select id="topic" name="topic">
+                  <select id="topic" name="topic" class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white">
                     <option>General Question</option>
                     <option>Bug Report</option>
                     <option>Feature Request</option>
@@ -146,7 +145,7 @@
                 </div>
                 <div class="sm:col-span-2">
                   <label class="block text-sm font-medium text-slate-400 mb-1" for="message">Message</label>
-                  <textarea id="message" name="message" rows="5" required placeholder="How can we help?"></textarea>
+                  <textarea id="message" name="message" rows="5" required placeholder="How can we help?" class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"></textarea>
                 </div>
                 <div class="sm:col-span-2 flex items-center gap-2">
                   <input id="agree" name="agree" type="checkbox" required />
@@ -154,8 +153,8 @@
                 </div>
               </div>
               <button class="w-full mt-4 px-5 h-11 rounded-md bg-blue-600 hover:bg-blue-700 font-bold text-white">Send Message</button>
-              <p class="form-help mt-2">Note: This demo stores your message locally in your browser.</p>
-              <div id="contactSuccess" tabindex="-1" class="success-box">Thank you! Your message has been saved.</div>
+              <p class="form-help mt-2 text-xs text-slate-500">Note: This demo stores your message locally in your browser.</p>
+              <div id="contactSuccess" tabindex="-1" class="success-box hidden mt-4 p-4 bg-green-600/20 text-green-300 rounded-md">Thank you! Your message has been saved.</div>
             </form>
           </div>
         </div>
@@ -186,9 +185,10 @@
     <!-- Footer (same as home) -->
     <footer class="border-t border-slate-800 bg-slate-900/90 text-slate-300">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <!-- Top: App + Newsletter -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           <div>
-            <h4 class="text-sm font-bold tracking-wide text-slate-400">DOWNLOAD OUR FTMO APP TO YOUR DEVICE</h4>
+            <h4 class="text-sm font-bold tracking-wide text-slate-400">DOWNLOAD OUR APP TO YOUR DEVICE</h4>
             <div class="mt-4 flex gap-4 flex-wrap">
               <a href="#" class="inline-flex items-center gap-3 rounded-md border border-slate-600 px-4 h-12 hover:border-slate-400">
                 <i class="fab fa-apple text-2xl"></i>
@@ -214,6 +214,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Payment options -->
         <div class="mt-10">
           <h4 class="text-sm font-bold tracking-wide text-slate-400">PAYMENT OPTIONS</h4>
           <div class="mt-5 flex flex-wrap items-center gap-x-10 gap-y-4 text-2xl">
@@ -226,13 +228,24 @@
             <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-solid fa-wallet"></i> Skrill</span>
           </div>
         </div>
+
+        <!-- Legal links -->
         <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
           <a href="cookie-policy.html" class="hover:text-white">Cookies</a>
           <a href="imprint.html" class="hover:text-white">Imprint</a>
           <a href="terms.html" class="hover:text-white">Terms & Conditions</a>
           <a href="privacy.html" class="hover:text-white">Privacy Policy</a>
         </div>
-        <div class="mt-8 text-sm text-slate-500">2025 © Copyright - FTMO.com Made with <span class="text-rose-400">❤</span> for trading</div>
+
+        <!-- Disclaimer -->
+        <div class="mt-8 text-xs text-slate-400 leading-relaxed">
+          All information provided on this site is intended solely for educational purposes related to trading on financial markets and does not serve in any way as a specific investment recommendation, business recommendation, investment opportunity analysis or similar general recommendation regarding the trading of investment instruments. TOPC only provides services of simulated trading and educational tools for traders. The information on this site is not directed at residents in any country or jurisdiction where such distribution or use would be contrary to local laws or regulations. TOPC companies do not act as a broker and do not accept any deposits. The offered technical solution for the TOPC platforms and data feed is powered by liquidity providers.
+        </div>
+
+        <!-- Copyright -->
+        <div class="mt-8 text-sm text-slate-500">
+          2025 © Copyright - TOPC.com Made with <span class="text-rose-400">❤</span> for trading
+        </div>
       </div>
     </footer>
 

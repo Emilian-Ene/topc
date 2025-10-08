@@ -11,5 +11,12 @@
     drawerCloseBtn&&drawerCloseBtn.addEventListener('click', close);
     drawerOverlay&&drawerOverlay.addEventListener('click', close);
     document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+
+    // Hide login button if user is logged in
+    const token = localStorage.getItem("token");
+    if (token) {
+        const loginLinks = document.querySelectorAll('a[href="login.html"]');
+        loginLinks.forEach(link => link.style.display = 'none');
+    }
   });
 })();

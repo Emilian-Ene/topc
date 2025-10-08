@@ -1,7 +1,7 @@
 // --- Constants ---
       const TRADES_STORAGE_KEY = "tradingJournalTrades_v20";
       const SETTINGS_STORAGE_KEY = "tradingJournalSettings_v20";
-      const API_KEY_STORAGE_KEY = "googleAiKey_v20";
+  // Removed client persistence of AI key for security (backend proxy handles key)
 
       // --- State Variables ---
       let trades = [];
@@ -112,10 +112,7 @@
           SETTINGS_STORAGE_KEY,
           JSON.stringify(currentSettings)
         );
-        const apiKey = document.getElementById("googleAiKey").value;
-        if (apiKey) {
-          localStorage.setItem(API_KEY_STORAGE_KEY, apiKey);
-        }
+        // Do NOT persist AI key locally anymore.
       };
 
       const loadAppData = () => {
@@ -193,10 +190,7 @@
           settings.jumpProbability;
         document.getElementById("avgJumpPnL").value = settings.avgJumpPnL;
 
-        const savedApiKey = localStorage.getItem(API_KEY_STORAGE_KEY);
-        if (savedApiKey) {
-          document.getElementById("googleAiKey").value = savedApiKey;
-        }
+        // AI key no longer loaded from localStorage.
       };
 
       function setVarModeUI(mode) {
@@ -238,6 +232,16 @@
         document.getElementById("jumpProbability").disabled = mode === "auto";
         document.getElementById("avgJumpPnL").disabled = mode === "auto";
       }
+
+      // Initialize Flatpickr
+      flatpickr("#tradeDate", {
+          enableTime: true,
+          dateFormat: "d/m/Y H:i",
+          defaultDate: new Date(),
+          altInput: true,
+          altFormat: "d/m/Y H:i",
+          time_24hr: true,
+      });
 
       function calculateStatistics(tradesToAnalyze) {
         if (!tradesToAnalyze || tradesToAnalyze.length === 0) {
@@ -1661,64 +1665,29 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
         return prompt;
       }
 
-      async function callGeminiAPI(history, apiKey) {
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
-        const payload = {
-          contents: history,
-          safetySettings: [
-            { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
-            { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
-            {
-              category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-              threshold: "BLOCK_NONE",
-            },
-            {
-              category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-              threshold: "BLOCK_NONE",
-            },
-          ],
-        };
-        const response = await fetch(apiUrl, {
+      async function callGeminiAPI(history) {
+        const token = localStorage.getItem("token");
+        const resp = await fetch("http://localhost:5000/api/ai/analyze", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
+          headers: {
+            "Content-Type": "application/json",
+            "x-auth-token": token || ""
+          },
+          body: JSON.stringify({ history })
         });
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(
-            errorData.error?.message || `API error: ${response.status}`
-          );
-        }
-        const result = await response.json();
-        if (
-          result.candidates &&
-          result.candidates.length > 0 &&
-          result.candidates[0].content
-        ) {
-          return result.candidates[0].content.parts[0].text;
-        } else {
-          let reason = "The AI returned an empty response.";
-          if (result.promptFeedback && result.promptFeedback.blockReason) {
-            reason = `Response was blocked. Reason: ${result.promptFeedback.blockReason}`;
-          }
-          throw new Error(reason);
-        }
+        const data = await resp.json().catch(() => ({}));
+        if (!resp.ok) throw new Error(data.error || `AI proxy error ${resp.status}`);
+        return data.text || "(No content returned)";
       }
 
       async function startAiChatSession() {
-        const apiKey = document.getElementById("googleAiKey").value;
         const errorEl = document.getElementById("aiInitialError");
         const startBtn = document.getElementById("startAiChatBtn");
         const aiIcon = document.getElementById("aiIcon");
         const aiButtonText = document.getElementById("aiButtonText");
 
         errorEl.classList.add("hidden");
-        if (!apiKey) {
-          errorEl.textContent =
-            "Please enter your Google AI API Key to start the analysis.";
-          errorEl.classList.remove("hidden");
-          return;
-        }
+        // Backend holds key now; no need to check client field
 
         startBtn.disabled = true;
         aiIcon.className = "fas fa-spinner fa-spin mr-2";
@@ -1744,7 +1713,7 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
 
         aiChatHistory = [{ role: "user", parts: [{ text: initialPrompt }] }];
         try {
-          const responseText = await callGeminiAPI(aiChatHistory, apiKey);
+          const responseText = await callGeminiAPI(aiChatHistory);
           aiChatHistory.push({
             role: "model",
             parts: [{ text: responseText }],
@@ -1769,9 +1738,7 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
         const input = document.getElementById("aiChatInput");
         const sendBtn = document.getElementById("aiChatSendBtn");
         const userMessage = input.value.trim();
-        const apiKey = document.getElementById("googleAiKey").value;
-
-        if (!userMessage || !apiKey) return;
+  if (!userMessage) return;
 
         addMessageToChatLog(userMessage, "user");
         aiChatHistory.push({ role: "user", parts: [{ text: userMessage }] });
@@ -1780,7 +1747,7 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
         addMessageToChatLog("Thinking...", "loading");
 
         try {
-          const responseText = await callGeminiAPI(aiChatHistory, apiKey);
+          const responseText = await callGeminiAPI(aiChatHistory);
           aiChatHistory.push({
             role: "model",
             parts: [{ text: responseText }],
@@ -1999,14 +1966,13 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
           netPnlEl.className = "text-2xl font-bold text-white";
           document.getElementById("db-statProfitFactor").textContent = "0.00";
           document.getElementById("db-statWinRate").textContent = "0%";
-          document.getElementById("db-statEvRPerTrade").textContent = "0.00R";
-          document.getElementById("statRecoveryFactor").textContent = "0.00";
+          const evEl = document.getElementById("db-statEvRPerTrade");
+          evEl.textContent = "0.00R";
+          evEl.className = "text-2xl font-bold text-white";
+          document.getElementById("db-drawdown-bar").style.width = `0%`;
           document.getElementById(
-            "statSqn"
-          ).innerHTML = `0.00 <span id="statSqnGrade" class="text-sm font-medium text-slate-400 ml-2">(N/A)</span>`;
-          document.getElementById("statMaxDrawdownDurationDays").textContent =
-            "0 days";
-
+            "db-drawdown-label"
+          ).textContent = `£0.00 / £0.00`;
           return;
         }
 
@@ -2294,12 +2260,21 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
           "tailWinThreshold",
           "jumpProbability",
           "avgJumpPnL",
-          "manualVaRInput",
-          "googleAiKey",
+          "manualVaRInput"
+          // googleAiKey intentionally excluded: now sourced from backend only
         ];
         settingsInputs.forEach((id) =>
           document.getElementById(id)?.addEventListener("change", saveAppData)
         );
+
+        document
+          .getElementById("pscUseCurrentBalance")
+          .addEventListener("click", () => {
+            document.getElementById("pscAccountBalance").value = (
+              currentStats.currentBalance || settings.initialBalance
+            ).toFixed(2);
+            calculatePositionSize();
+          });
 
         document
           .querySelectorAll(
@@ -2403,27 +2378,39 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
           .getElementById("aiChatForm")
           .addEventListener("submit", handleAiChatSubmit);
 
-        updateUI();
-
-        // Off-canvas (right) drawer controls for header
-        const navTrigger = document.getElementById("navTrigger");
-        const drawerOverlay = document.getElementById("drawerOverlay");
-        const drawerPanel = document.getElementById("drawerPanel");
-        const drawerCloseBtn = document.getElementById("drawerCloseBtn");
-        const openDrawer = () => {
-          drawerOverlay.classList.remove("hidden");
-          drawerPanel.classList.remove("translate-x-full");
-          document.body.classList.add("overflow-hidden");
-        };
-        const closeDrawer = () => {
-          drawerOverlay.classList.add("hidden");
-          drawerPanel.classList.add("translate-x-full");
-          document.body.classList.remove("overflow-hidden");
-        };
-        navTrigger?.addEventListener("click", openDrawer);
-        drawerCloseBtn?.addEventListener("click", closeDrawer);
-        drawerOverlay?.addEventListener("click", closeDrawer);
-        document.addEventListener("keydown", (e) => {
-          if (e.key === "Escape") closeDrawer();
+        // API Key visibility toggle
+        const toggleBtn = document.getElementById("toggleApiKeyVisibility");
+        const apiKeyInput = document.getElementById("googleAiKey");
+        toggleBtn?.addEventListener("click", () => {
+          if (!apiKeyInput) return;
+            const isHidden = apiKeyInput.type === "password";
+            apiKeyInput.type = isHidden ? "text" : "password";
+            toggleBtn.innerHTML = `<i class="far ${isHidden ? "fa-eye-slash" : "fa-eye"}"></i>`;
         });
+
+        // Security notice if key present (user exposed key earlier)
+        if (apiKeyInput) {
+          apiKeyInput.setAttribute("readonly", "readonly");
+          apiKeyInput.classList.add("cursor-not-allowed", "opacity-80");
+        }
+
+        // Hook to receive user data (auth.js triggers window.onUserDataLoaded)
+        window.onUserDataLoaded = (user) => {
+          try {
+            if (user && user.googleAiKey && apiKeyInput) {
+              apiKeyInput.value = user.googleAiKey;
+              // No local caching for AI key.
+            }
+          } catch (e) {
+            console.warn("Failed to sync googleAiKey:", e);
+          }
+        };
+
+        if (apiKeyInput?.value) {
+          console.warn(
+            "Security: API key present in DOM. Consider proxying AI calls server-side to conceal it."
+          );
+        }
+
+        updateUI();
       });

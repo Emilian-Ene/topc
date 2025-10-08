@@ -177,10 +177,49 @@ body {
         font-weight: 600;
       }
 
-      /* Header responsive breakpoint at 1200px */
+      #headerUserInitials, #dropdownUserInitials, #profilePageUserInitials {
+          border-radius: 50%;
+          flex-shrink: 0; /* Prevent the icon from shrinking */
+      }
+
+      /* --- Global Autofill Style Override --- */
+      input:-webkit-autofill,
+      input:-webkit-autofill:hover, 
+      input:-webkit-autofill:focus, 
+      input:-webkit-autofill:active {
+          -webkit-box-shadow: 0 0 0 30px #0f172a inset !important; /* Your dark input background */
+          -webkit-text-fill-color: #e2e8f0 !important; /* Your light text color */
+          transition: background-color 5000s ease-in-out 0s;
+      }
+
+      /* Brand slider strip styles */
+      .brand-strip{border-top:1px solid #1f2937;background:rgba(2,6,23,.7)}
+
+      .profile-notice {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          background-color: rgba(234, 179, 8, 0.1);
+          color: #facc15;
+          padding: 1rem;
+          border-radius: 0.5rem;
+          border: 1px solid rgba(234, 179, 8, 0.2);
+          font-weight: 600;
+          margin-bottom: 1.5rem;
+      }
+
+      .profile-notice.hidden {
+          display: none;
+      }
+
+      /* Responsive Header Breakpoint */
       .nav-desktop { display: flex; }
       .nav-trigger { display: none; }
-      @media (max-width: 1200px) {
+      @media (max-width: 1220px) {
         .nav-desktop { display: none !important; }
         .nav-trigger { display: inline-flex !important; }
+      }
+
+      #userMenu {
+          z-index: 100 !important; /* Use !important to override other styles */
       }

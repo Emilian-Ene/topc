@@ -18,6 +18,9 @@
     />
 
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/brand-strip.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
     
   </head>
 
@@ -61,16 +64,45 @@
           <nav class="nav-desktop hidden xl:flex items-center gap-8 text-sm font-semibold text-slate-300">
             <a href="faq.html" class="hover:text-white">FAQ</a>
             <a href="testimonials.html" class="hover:text-white">Testimonials</a>
-            <a href="#" class="hover:text-white flex items-center gap-1">Trading</a>
+            <a href="index.html" class="hover:text-white flex items-center gap-1">Trading</a>
             <a href="about.html" class="hover:text-white flex items-center gap-1">About us</a>
           </nav>
 
           <!-- Right Side -->
           <div class="ml-auto flex items-center gap-4">
-            <!-- Client Area link hidden on Dashboard page -->
-            <a href="#" class="hidden">Client Area</a>
-            <span class="hidden sm:block font-semibold text-slate-200">Ionut Emilian</span>
-            <div class="w-8 h-8 rounded-full bg-blue-200 text-blue-800 flex items-center justify-center text-sm font-bold">IE</div>
+            <a href="dashboard.html" class="hidden md:inline text-blue-400 hover:text-blue-300 font-semibold">Client Area</a>
+            <div class="relative z-50">
+                <button id="userMenuButton" class="flex items-center gap-3">
+                    <span id="headerUsername" class="hidden sm:block font-semibold text-slate-200">Ionut Emilian</span>
+                    <div id="headerUserInitials" class="w-8 h-8 rounded-full bg-blue-200 text-blue-800 flex items-center justify-center text-sm font-bold">IE</div>
+                </button>
+                <div id="userMenu" class="absolute right-0 mt-2 w-64 bg-slate-800 border border-slate-700 rounded-lg shadow-lg z-50 hidden">
+                            <div class="p-4 border-b border-slate-700">
+                                <div class="flex items-center gap-3">
+                                    <div>
+                                        <p id="dropdownUsername" class="font-semibold text-white">Ionut Emilian Ene</p>
+                                        <p class="text-sm text-slate-400">ionutemilianene@gmail.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <nav class="p-2">
+                                <a href="my-profile.html" class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 rounded-md">
+                                  <i class="fas fa-user-circle w-5 text-center"></i>
+                                  <span>My Profile</span>
+                                </a>
+                                <a href="billing.html" class="flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-slate-700 rounded-md">
+                                  <i class="fas fa-file-invoice-dollar w-5 text-center"></i>
+                                  <span>Billing</span>
+                                </a>
+                              </nav>
+                              <div class="p-2 border-t border-slate-700">
+                                <button id="logoutButton" class="w-full text-left flex items-center gap-3 px-3 py-2 text-slate-300 hover:bg-red-600/50 rounded-md">
+                                  <i class="fas fa-sign-out-alt w-5 text-center"></i>
+                                  <span>Log Out</span>
+                                </button>
+                              </div>
+              </div>
+            </div>
             <button id="navTrigger" class="nav-trigger xl:hidden p-2 -mr-2 text-slate-300 hover:text-white" aria-label="Open menu">
               <i class="fas fa-bars"></i>
             </button>
@@ -89,7 +121,7 @@
       <nav class="px-4 py-3 flex flex-col gap-4 text-base font-semibold text-slate-200">
         <a href="faq.html" class="py-1">FAQ</a>
         <a href="testimonials.html" class="py-1">Testimonials</a>
-        <a href="#" class="flex items-center justify-between py-1">Trading <i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
+        <a href="index.html" class="flex items-center justify-between py-1">Trading <i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
         <a href="about.html" class="flex items-center justify-between py-1">About us <i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
         <div class="py-2 border-t border-slate-700/80"></div>
         <a href="#" class="flex items-center justify-between py-1"><span class="flex items-center gap-2"><span class="text-xl">🇬🇧</span> EN</span><i class="fa-solid fa-chevron-right text-xs opacity-70"></i></a>
@@ -111,6 +143,10 @@
       </header>
 
       <main class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <div id="incompleteProfileNotice" class="hidden profile-notice lg:col-span-5">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span>Your account details are incomplete. <a href="my-profile.html" class="font-bold underline hover:text-yellow-300">Please complete your profile settings.</a></span>
+        </div>
         <div class="lg:col-span-2 flex flex-col gap-6">
           <!-- Trade Journal and Risk Calculators (Column 1) -->
           <section
@@ -147,9 +183,10 @@
                   class="block text-sm font-medium text-slate-400 mb-1"
                   >Date & Time</label
                 ><input
-                  type="datetime-local"
+                  type="text"
                   id="tradeDate"
                   class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
+                  placeholder="dd/mm/yyyy --:--"
                   required
                 />
               </div>
@@ -170,7 +207,12 @@
                 <label
                   for="tradePnL"
                   class="block text-sm font-medium text-slate-400 mb-1"
-                  >P&L (£)</label
+                  >P&L (£)<span class="tooltip-container"
+                    ><i class="fas fa-info-circle text-slate-500 ml-1"></i
+                    ><span class="tooltip-text"
+                      >Enter a positive number for a win (e.g., 100) and a negative number for a loss (e.g., -50).</span
+                    ></span
+                  ></label
                 ><input
                   type="number"
                   id="tradePnL"
@@ -1652,20 +1694,27 @@
                   <div id="aiInitialState">
                     <p class="text-sm text-slate-400 mb-4">
                       Get personalized feedback on your trading performance.
-                      Provide your Google AI (Gemini) API key to begin.
+                      Your Google AI (Gemini) API key is stored securely in your profile settings and used server-side; it is shown here read-only.
                     </p>
                     <div class="mb-4">
                       <label
                         for="googleAiKey"
                         class="block text-sm font-medium text-slate-400 mb-1"
-                        >Google AI API Key</label
-                      >
-                      <input
-                        type="password"
-                        id="googleAiKey"
-                        placeholder="Enter your API key"
-                        class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
-                      />
+                        >Google AI API Key
+                        <span class="text-xs font-normal text-slate-500 block mt-1">Never share this publicly. (Regenerate your key now because it was exposed in chat.)</span>
+                      </label>
+                      <div class="relative">
+                        <input
+                          type="password"
+                          id="googleAiKey"
+                          placeholder="No key saved yet"
+                          class="form-input w-full p-2 pr-10 bg-slate-700 border border-slate-600 rounded-md text-white tracking-wider cursor-not-allowed opacity-80"
+                          autocomplete="off" readonly
+                        />
+                        <button type="button" id="toggleApiKeyVisibility" class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-200" aria-label="Toggle API key visibility">
+                          <i class="far fa-eye"></i>
+                        </button>
+                      </div>
                     </div>
                     <p
                       id="aiInitialError"
@@ -1709,10 +1758,7 @@
       </main>
     </div>
 
-    <div
-      id="messageBox"
-      class="hidden fixed bottom-5 right-5 bg-blue-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 text-base transition-all duration-300 transform translate-x-full opacity-0"
-    ></div>
+    <div id="messageBox"></div>
     <div id="confirmModal" class="modal-overlay">
       <div class="modal-content">
         <p
@@ -1773,9 +1819,8 @@
               id="editTradePnL"
               step="0.01"
               class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
-              required
-            />
-          </div>
+              required            />
+                   </div>
           <div>
             <label
               for="editTradeRiskAmount"
@@ -1783,11 +1828,10 @@
               >Risk (1R) (£)</label
             ><input
               type="number"
-              id="editTradeRiskAmount"
+                           id="editTradeRiskAmount"
               step="0.01"
               class="form-input w-full p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
-              required
-            />
+              required            />
           </div>
           <div class="md:col-span-2">
             <label
@@ -1834,9 +1878,98 @@
       </div>
     </div>
 
-    <!-- Drawer script centralized -->
+    <!-- Brand slider strip above footer -->
+    <section class="brand-strip">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="brand-viewport">
+          <div class="brand-track" data-duplicate>
+            <div class="brand-seq">
+              <div class="brand-item"><span class="k">Forbes</span></div>
+              <div class="brand-item"><span class="k">fmls:23</span><span class="sub">Best Prop Trading Firm</span></div>
+              <div class="brand-item"><span class="k">fmls:24</span><span class="sub">Best Prop Trading Firm</span></div>
+              <div class="brand-item"><span class="badge">50</span><span class="sub">Deloitte Fast • 2023 Winner</span></div>
+              <div class="brand-item"><span class="badge">50</span><span class="sub">Deloitte Fast • 2022 Winner</span></div>
+              <div class="brand-item"><span class="badge">50</span><span class="sub">Deloitte Fast • 2021 Winner</span></div>
+              <div class="brand-item"><span class="badge">50</span><span class="sub">Deloitte Fast • 2020 Winner</span></div>
+              <div class="brand-item"><span class="k">EY Entrepreneur</span><span class="sub">2022 CZ • Tech Category</span></div>
+              <div class="brand-item"><i class="fa-solid fa-star text-emerald-400"></i><span class="k">4.8</span><span class="sub">Trustpilot</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer (same as home) -->
+    <footer class="border-t border-slate-800 bg-slate-900/90 text-slate-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <!-- Top: App + Newsletter -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          <div>
+            <h4 class="text-sm font-bold tracking-wide text-slate-400">DOWNLOAD OUR APP TO YOUR DEVICE</h4>
+            <div class="mt-4 flex gap-4 flex-wrap">
+              <a href="#" class="inline-flex items-center gap-3 rounded-md border border-slate-600 px-4 h-12 hover:border-slate-400">
+                <i class="fab fa-apple text-2xl"></i>
+                <div class="leading-tight">
+                  <div class="text-[10px] text-slate-400">Download on the</div>
+                  <div class="text-sm font-semibold">App Store</div>
+                </div>
+              </a>
+              <a href="#" class="inline-flex items-center gap-3 rounded-md border border-slate-600 px-4 h-12 hover:border-slate-400">
+                <i class="fab fa-google-play text-xl"></i>
+                <div class="leading-tight">
+                  <div class="text-[10px] text-slate-400">Download on</div>
+                  <div class="text-sm font-semibold">Google Play</div>
+                </div>
+              </a>
+            </div>
+          </div>
+          <div>
+            <h4 class="text-sm font-bold tracking-wide text-slate-400">STAY UPDATED WITH OUR NEWSLETTER!</h4>
+            <div class="mt-4 flex gap-3">
+              <input type="email" placeholder="Email" class="flex-1 h-12 rounded-md bg-slate-800 border border-slate-700 px-4 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <button class="h-12 px-5 rounded-md bg-blue-600 hover:bg-blue-700 text-white font-bold">SUBSCRIBE</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment options -->
+        <div class="mt-10">
+          <h4 class="text-sm font-bold tracking-wide text-slate-400">PAYMENT OPTIONS</h4>
+          <div class="mt-5 flex flex-wrap items-center gap-x-10 gap-y-4 text-2xl">
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-solid fa-building-columns"></i> Bank Transfer</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-brands fa-cc-mastercard"></i> Mastercard</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-brands fa-cc-visa"></i> VISA</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-brands fa-cc-discover"></i> Discover</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-brands fa-cc-paypal"></i> PayPal</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-solid fa-credit-card"></i> Maestro</span>
+            <span class="inline-flex items-center gap-2 text-slate-300 text-base"><i class="fa-solid fa-wallet"></i> Skrill</span>
+          </div>
+        </div>
+
+        <!-- Legal links -->
+        <div class="mt-8 flex flex-wrap gap-x-8 gap-y-3 text-sm">
+          <a href="cookie-policy.html" class="hover:text-white">Cookies</a>
+          <a href="imprint.html" class="hover:text-white">Imprint</a>
+          <a href="terms.html" class="hover:text-white">Terms & Conditions</a>
+          <a href="privacy.html" class="hover:text-white">Privacy Policy</a>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="mt-8 text-xs text-slate-400 leading-relaxed">
+          All information provided on this site is intended solely for educational purposes related to trading on financial markets and does not serve in any way as a specific investment recommendation, business recommendation, investment opportunity analysis or similar general recommendation regarding the trading of investment instruments. TOPC only provides services of simulated trading and educational tools for traders. The information on this site is not directed at residents in any country or jurisdiction where such distribution or use would be contrary to local laws or regulations. TOPC companies do not act as a broker and do not accept any deposits. The offered technical solution for the TOPC platforms and data feed is powered by liquidity providers.
+        </div>
+
+        <!-- Copyright -->
+        <div class="mt-8 text-sm text-slate-500">
+          2025 © Copyright - TOPC.com Made with <span class="text-rose-400">❤</span> for trading
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/brand-strip.js" defer></script>
     <script src="js/nav.js" defer></script>
-    <script src="./js/dashboard.js" defer></script>
-    
   </body>
 </html>
