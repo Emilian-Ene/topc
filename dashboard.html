@@ -142,15 +142,17 @@
         </p>
       </header>
 
-      <main class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        <div id="incompleteProfileNotice" class="hidden profile-notice lg:col-span-5">
+      <main class="flex flex-col gap-6">
+        <div id="incompleteProfileNotice" class="hidden profile-notice">
             <i class="fas fa-exclamation-triangle"></i>
             <span>Your account details are incomplete. <a href="my-profile.html" class="font-bold underline hover:text-yellow-300">Please complete your profile settings.</a></span>
         </div>
-        <div class="lg:col-span-2 flex flex-col gap-6">
-          <!-- Trade Journal and Risk Calculators (Column 1) -->
+        
+        <!-- Top Row: Trade Journal (Left) + Risk Calculators (Right) -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          <!-- Trade Journal (Left) - Takes 3 columns (60%) -->
           <section
-            class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-6 h-fit"
+            class="lg:col-span-3 bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-6 h-fit"
           >
             <h2
               class="text-2xl font-bold text-white mb-4 flex items-center gap-3"
@@ -172,7 +174,7 @@
                     type="number"
                     id="initialBalance"
                     step="0.01"
-                    value="1000.00"
+                    value="0.00"
                     class="form-input w-full pl-7 p-2 bg-slate-700 border border-slate-600 rounded-md text-white"
                   />
                 </div>
@@ -342,8 +344,9 @@
             </div>
           </section>
 
+          <!-- Risk Calculators (Right) - Takes 2 columns (40%) -->
           <section
-            class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-6 h-fit"
+            class="lg:col-span-2 bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-6 h-fit"
           >
             <div class="flex items-center justify-between mb-4">
               <h2 class="text-2xl font-bold text-white flex items-center gap-3">
@@ -575,12 +578,11 @@
             </div>
           </section>
         </div>
-
-        <div class="lg:col-span-3 flex flex-col gap-6">
-          <!-- Tabs and Main Content (Column 2) -->
-          <section
-            class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-6"
-          >
+        
+        <!-- Bottom Row: Main Dashboard/Analytics (Full Width) -->
+        <section
+          class="bg-slate-800/50 backdrop-blur-sm rounded-xl shadow-lg border border-slate-700 p-6"
+        >
             <div class="border-b border-slate-700 mb-4">
               <nav class="flex space-x-1" id="tab-buttons">
                 <button
@@ -1754,7 +1756,6 @@
               </div>
             </div>
           </section>
-        </div>
       </main>
     </div>
 

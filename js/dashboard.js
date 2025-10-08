@@ -79,7 +79,7 @@
       const saveAppData = () => {
         const currentSettings = {
           initialBalance:
-            parseFloat(document.getElementById("initialBalance").value) || 1000,
+            parseFloat(document.getElementById("initialBalance").value) || 0,
           activeFilters: activeFilters,
           varMode: document.querySelector(
             "#varModeSelector .var-mode-btn.active"
@@ -156,7 +156,7 @@
         trades.sort((a, b) => new Date(a.date) - new Date(b.date));
 
         const defaultSettings = {
-          initialBalance: 1000.0,
+          initialBalance: 0.0,
           activeFilters: [],
           varMode: "auto",
           manualVaRValue: 0,
@@ -242,6 +242,25 @@
           altFormat: "d/m/Y H:i",
           time_24hr: true,
       });
+
+      // Function to update initial balance with running balance after adding trades
+      function updateInitialBalanceAfterTrade() {
+        if (trades.length === 0) {
+          // If no trades, reset to original initial balance from settings
+          document.getElementById("initialBalance").value = (settings.initialBalance || 0).toFixed(2);
+          return;
+        }
+        
+        // Calculate cumulative P&L from all trades
+        const totalPnL = trades.reduce((sum, trade) => sum + trade.pnL, 0);
+        
+        // Calculate running balance: original initial balance + cumulative P&L
+        const originalInitialBalance = settings.initialBalance || 0;
+        const currentRunningBalance = originalInitialBalance + totalPnL;
+        
+        // Update the initial balance field to show current running balance
+        document.getElementById("initialBalance").value = currentRunningBalance.toFixed(2);
+      }
 
       function calculateStatistics(tradesToAnalyze) {
         if (!tradesToAnalyze || tradesToAnalyze.length === 0) {
@@ -555,7 +574,7 @@
 
         const tags = tagsString
           ? tagsString
-              .split(",")
+              .split(/[,;]/) // Accept both comma and semicolon separators
               .map((tag) => tag.trim())
               .filter((tag) => tag)
           : [];
@@ -572,6 +591,9 @@
         });
 
         trades.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+        // Update initial balance to reflect new running balance
+        updateInitialBalanceAfterTrade();
 
         saveAppData();
         updateUI();
@@ -689,7 +711,7 @@
             else el.textContent = "0";
           });
           document.getElementById("statCurrentBalance").textContent = `£${(
-            settings.initialBalance || 1000
+            settings.initialBalance || 0
           ).toFixed(2)}`;
           document.getElementById("db-statNetPnL").textContent = "£0.00";
           document.getElementById("db-statProfitFactor").textContent = "0.00";
@@ -1534,43 +1556,83 @@
             labels: labels,
             datasets: [
               {
-                label: "90th Percentile",
+                label: "90th Percentile (Best Case)",
                 data: p90,
-                borderColor: "rgba(52, 211, 153, 0.3)",
-                borderWidth: 1,
+                borderColor: "rgba(34, 197, 94, 0.9)", // Bright green, high opacity
+                backgroundColor: "rgba(34, 197, 94, 0.1)", // Light green fill
+                borderWidth: 1.5, // Thin line
                 pointRadius: 0,
                 fill: "+1",
+                tension: 0.1,
               },
               {
-                label: "10th Percentile",
+                label: "10th Percentile (Worst Case)",
                 data: p10,
-                borderColor: "rgba(248, 113, 113, 0.3)",
-                backgroundColor: "rgba(71, 85, 105, 0.4)",
-                borderWidth: 1,
+                borderColor: "rgba(239, 68, 68, 0.9)", // Bright red, high opacity
+                backgroundColor: "rgba(71, 85, 105, 0.3)", // Darker fill for contrast
+                borderWidth: 1.5, // Thin line
                 pointRadius: 0,
                 fill: false,
+                tension: 0.1,
               },
               {
-                label: "Median (50th Percentile)",
+                label: "Median (Most Likely)",
                 data: p50,
-                borderColor: "#3b82f6",
-                borderWidth: 2,
+                borderColor: "rgba(59, 130, 246, 1)", // Bright blue, full opacity
+                borderWidth: 2, // Slightly thicker than others but still thin
                 pointRadius: 0,
                 tension: 0.1,
                 fill: false,
+                borderDash: [], // Solid line
               },
             ],
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            plugins: { legend: { display: false }, title: { display: false } },
+            plugins: { 
+              legend: { 
+                display: true,
+                position: 'top',
+                labels: {
+                  color: '#e2e8f0', // Light color for dark theme
+                  font: {
+                    size: 12
+                  },
+                  usePointStyle: true,
+                  pointStyle: 'line'
+                }
+              }, 
+              title: { display: false } 
+            },
             scales: {
               x: {
-                title: { display: true, text: "Trade Number" },
-                grid: { drawOnChartArea: false },
+                title: { 
+                  display: true, 
+                  text: "Trade Number",
+                  color: '#94a3b8'
+                },
+                grid: { 
+                  drawOnChartArea: false,
+                  color: 'rgba(148, 163, 184, 0.1)'
+                },
+                ticks: {
+                  color: '#94a3b8'
+                }
               },
-              y: { title: { display: true, text: "P&L (£)" } },
+              y: { 
+                title: { 
+                  display: true, 
+                  text: "P&L (£)",
+                  color: '#94a3b8'
+                },
+                grid: {
+                  color: 'rgba(148, 163, 184, 0.1)'
+                },
+                ticks: {
+                  color: '#94a3b8'
+                }
+              },
             },
           },
         });
@@ -1848,6 +1910,7 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
         if (newTrades.length > 0) {
           trades.push(...newTrades);
           trades.sort((a, b) => new Date(a.date) - new Date(b.date));
+          updateInitialBalanceAfterTrade();
           saveAppData();
           updateUI();
           showMessageBox(
@@ -1867,6 +1930,7 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
       const deleteTrade = async (id) => {
         if (await showConfirmModal("Delete this trade permanently?")) {
           trades = trades.filter((t) => t.id !== id);
+          updateInitialBalanceAfterTrade();
           saveAppData();
           updateUI();
           showMessageBox("Trade deleted.", "info");
@@ -1879,6 +1943,7 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
           await showConfirmModal("Clear ALL trades? This cannot be undone.")
         ) {
           trades = [];
+          updateInitialBalanceAfterTrade();
           saveAppData();
           loadAppData();
           updateUI();
@@ -1936,23 +2001,71 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
           parseFloat(document.getElementById("rorRiskPerTrade").value) || 0;
         const edge = currentStats.evRPerTrade || 0;
         const winRate = currentStats.winRate || 0;
+        const avgRPerWin = currentStats.avgRPerWin || 0;
+        const avgRPerLoss = currentStats.avgRPerLoss || 0;
+        
         document.getElementById("rorSourceWinRate").textContent = `${(
           winRate * 100
         ).toFixed(2)}%`;
         document.getElementById("rorSourceAvgR").textContent = `${edge.toFixed(
           2
         )}R`;
+        
         let ror = 0,
           tradesToRuin = 0;
+        
         if (riskPerTrade > 0 && drawdown > 0 && currentStats.totalTrades > 0) {
           tradesToRuin = Math.ceil(drawdown / riskPerTrade);
-          if (edge > 0) {
-            const capitalUnits = drawdown / riskPerTrade;
-            ror = Math.exp(-2 * edge * capitalUnits) * 100;
+          
+          if (edge > 0 && winRate > 0 && winRate < 1 && avgRPerWin > 0 && avgRPerLoss > 0) {
+            // Standard Risk of Ruin formula with practical adjustments
+            const p = winRate; // win probability
+            const q = 1 - winRate; // loss probability
+            const a = avgRPerWin; // average win in R
+            const b = Math.abs(avgRPerLoss); // average loss in R (positive)
+            
+            // Calculate advantage ratio
+            const advantageRatio = (p * a - q * b) / (p * a + q * b);
+            
+            if (advantageRatio > 0) {
+              // Use modified Kelly-based Risk of Ruin
+              const f = riskPerTrade / 100; // risk fraction
+              const kelly = (p * (1 + a) - 1) / a; // optimal Kelly fraction
+              const kellyRatio = f / kelly; // how much of Kelly we're using
+              
+              // Risk of ruin increases exponentially with position size relative to Kelly
+              const capitalUnits = drawdown / riskPerTrade;
+              
+              if (kellyRatio <= 1) {
+                // Conservative: using less than or equal to Kelly
+                ror = Math.pow((q/p) * (b/a), capitalUnits) * 100;
+                
+                // Add practical adjustment for real-world factors
+                const realWorldMultiplier = 1 + (kellyRatio * 0.5); // account for slippage, emotions, etc.
+                ror *= realWorldMultiplier;
+              } else {
+                // Aggressive: using more than Kelly - much higher risk
+                const excessRisk = Math.pow(kellyRatio, 2);
+                ror = Math.pow((q/p) * (b/a), capitalUnits / excessRisk) * 100;
+                ror = Math.min(ror * excessRisk * 5, 100);
+              }
+              
+            } else {
+              ror = 100; // No edge = certain ruin
+            }
+          } else if (edge <= 0) {
+            ror = 100; // Negative edge = certain ruin
           } else {
-            ror = 100;
+            ror = 50; // Invalid data fallback
           }
+          
+          // Ensure reasonable bounds (minimum 0.01% for display, maximum 100%)
+          if (ror > 0 && ror < 0.01) {
+            ror = 0.01; // Show very small but non-zero risk
+          }
+          ror = Math.min(ror, 100);
         }
+        
         document.getElementById("rorResultTrades").textContent = tradesToRuin;
         document.getElementById(
           "rorResultPercent"
@@ -2029,10 +2142,18 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
           const tradesToAnalyze =
             activeFilters.length > 0
               ? trades.filter(
-                  (t) =>
-                    t.tags && activeFilters.every((f) => t.tags.includes(f))
+                  (t) => {
+                    const hasAnyRequiredTag = t.tags && activeFilters.some((f) => t.tags.includes(f));
+                    return hasAnyRequiredTag;
+                  }
                 )
               : trades;
+
+          console.log(`Active filters: ${activeFilters.join(', ')}`);
+          console.log(`Total trades: ${trades.length}, Filtered trades: ${tradesToAnalyze.length}`);
+          if (tradesToAnalyze.length > 0) {
+            console.log('Sample filtered trade tags:', tradesToAnalyze[0].tags);
+          }
 
           calculateStatistics(tradesToAnalyze);
           markovStats = calculateMarkovProbabilities(tradesToAnalyze);
@@ -2202,6 +2323,9 @@ Based on ALL the data above, please provide a comprehensive analysis covering:
         setTradesPerSeriesModeUI(settings.tradesPerSeriesMode);
         setTailModeUI(settings.tailMode);
         document.getElementById("tradeDate").value = formatISODate(new Date());
+        
+        // Update initial balance to show current running balance on page load
+        updateInitialBalanceAfterTrade();
 
         document
           .getElementById("addTradeBtn")
